@@ -2,7 +2,7 @@
 # 表情云 SDK接入文档
 ## 表情云 SDK简介
 1. 为 APP 提供了完整的表情键盘及表情商店。
-2. 环信官方`SDK3.1.3 ChatDemoUI3.0`版Demo已默认集成表情云 SDK，可以直接下载试用。
+2. 环信官方`SDK3.1.4 ChatDemoUI3.0`版Demo已默认集成表情云 SDK，可以直接下载试用。
 
 ## 表情云 SDK介绍
 表情云 SDK包含 `BQMM.framework` 和 `BQMM_EXT`，`BQMM.framework`提供表情键盘、表情商店，`BQMM_EXT`以开源方式提供，实现表情消息的展示。
