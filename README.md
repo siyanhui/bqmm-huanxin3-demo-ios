@@ -1,490 +1,252 @@
-#环信3.0 iOS接入说明
 
-##0. 导入资源文件
+# 表情云 SDK接入文档
+## 表情云 SDK简介
+1. 为 APP 提供了完整的表情键盘及表情商店。
+2. 环信官方`SDK3.1.3 ChatDemoUI3.0`版Demo已默认集成表情云 SDK，可以直接下载试用。
 
-主工程和EaseUI都需要加入`BQMM.framework`和`BQMM.bundle`。
+## 表情云 SDK介绍
+表情云 SDK包含 `BQMM.framework` 和 `BQMM_EXT`，`BQMM.framework`提供表情键盘、表情商店，`BQMM_EXT`以开源方式提供，实现表情消息的展示。
 
-另外，EaseUI中需加入：
+## Step1. 导入SDK
+将`BQMM`添加到工程中。
 
-* `emoji_placeholder.png`
-* `MMTextParser+ExtData.h`
-* `MMTextParser+ExtData.m` 
-* `MMTextView.h` 
-* `MMTextView.m`
+## Step2. 配置AppId及AppSecret
 
-主工程中加入
+**@Class**:AppDelegate
 
-* `emoji_placeholder.png`
-* `MMTextParser+ExtData.h`
-* `MMTextView.h`
+**@Function**:- (BOOL)application:(UIApplication \*)application didFinishLaunchingWithOptions:(NSDictionary \*)launchOptions；
 
-##1. 注册AppId&AppSecret
+**@description**: appId及secret由表情云分配
 
-在`AppDelegate `的方法`application:didFinishLaunchingWithOptions:`中加入
-
-```
-[[MMEmotionCentre defaultCentre] setAppId:@"YOUR_APP_ID" secret:@"YOUR_SECRET"];
+```objectivec
+// 初始化表情云 SDK
+[[MMEmotionCentre defaultCentre] setAppId:@“your app id” secret:@“your secret”]
 ```
 
-`applicationWillEnterForeground:`中加入
 
-```
-[[MMEmotionCentre defaultCentre] clearSession];
-```
+## Step3. 添加表情键盘
 
-##2. 添加表情mm键盘
-在`EaseChatToolbar`类中添加表情键盘相关方法。
+### 1.设置SDK代理
+**@Class**:EaseChatToolbar
 
-###2.1 设置SDK代理
-
-在`initWithFrame`中加入以下代码
+**@Function**:- (instancetype)initWithFrame:(CGRect)frame
+horizontalPadding:(CGFloat)horizontalPadding
+verticalPadding:(CGFloat)verticalPadding
+inputViewMinHeight:(CGFloat)inputViewMinHeight
+inputViewMaxHeight:(CGFloat)inputViewMaxHeight
+type:(EMChatToolbarType)type;
 
 ```objectivec
 [MMEmotionCentre defaultCentre].delegate = self;
 ```
 
-###2.2 实现表情键盘和普通键盘切换按钮
+### 2.添加表情键盘
+**@Class**:EaseChatToolbar
+
+**@Function**:- (void)faceButtonAction:(id)sender;
 
 ```objectivec
-- (void)faceButtonAction:(id)sender
-{
-    UIButton *button = (UIButton *)sender;
-    button.selected = !button.selected;
-    
-    EaseChatToolbarItem *faceItem = nil;
-    for (EaseChatToolbarItem *item in self.rightItems) {
-        if (item.button == button){
-            faceItem = item;
-            continue;
-        }
-        
-        item.button.selected = NO;
-    }
-    
-    for (EaseChatToolbarItem *item in self.leftItems) {
-        item.button.selected = NO;
-    }
-    
-    //替换成表情MM键盘
-    if (button.isSelected) {
-        self.moreButton.selected = NO;
-        
-        if (!_inputTextView.isFirstResponder) {
-            [_inputTextView becomeFirstResponder];
-        }
-        //添加表情键盘
-        [[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];
-        self.faceButton.selected = YES;
-    }
-    else {
-        //切换为普通键盘
-        [[MMEmotionCentre defaultCentre] switchToDefaultKeyboard];
-    }
+if (!_inputTextView.isFirstResponder) {
+[_inputTextView becomeFirstResponder];
 }
+[[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];
 ```
 
+### 3.由表情键盘切换为普通键
+**@Class**:EaseChatToolbar
 
-###2.3 添加大表情联想输入
+**@Function**:- (void)faceButtonAction:(id)sender;
 
-在`_setupSubviews`方法中添加表情联想输入框
+```objectivec
+[[MMEmotionCentre defaultCentre] switchToDefaultKeyboard];
+```
+
+## Step4. 在App重新打开时清空session
+**@Class**:AppDelegate
+
+**@Function**:-- (void)applicationWillEnterForeground;
+
+```objectivec
+[[MMEmotionCentre defaultCentre] clearSession];
+```
+
+## Step5. 添加表情联想
+**@Class**:EaseChatToolbar
+
+**@Function**:- (void)setupSubviews;
 
 ```objectivec
 [[MMEmotionCentre defaultCentre] shouldShowShotcutPopoverAboveView:self.faceButton withInput:self.inputTextView];
 ```
 
-###2.4 实现表情发送代理方法
+## Step6.熟悉表情消息编辑控件
+SDK提供`UITextView+BQMM`作为表情编辑控件的扩展实现。
 
 ```objectivec
+/**
+* 用于显示图文混排的表情消息。
+*/
+@property(nonatomic, assign) NSString *mmText;
+```
+
+在编辑图文混排表情消息时，注意使用`textView.mmText`替换原有`textView.text`。
+
+```objectivec
+[self.delegate didSendText:textView.mmText];
+```
+
+## Step7. 实现表情发送代理方法
+**@Class**:EaseChatToolbar
+
+```objectivec
+#pragma mark - *MMEmotionCentreDelegate
+
 //点击键盘中大表情的代理
 - (void)didSelectEmoji:(MMEmoji *)emoji
 {
-    if ([self.delegate respondsToSelector:@selector(didSendMMFace:)]) {
-        [self.delegate didSendMMFace:emoji];
-    }
+if ([self.delegate respondsToSelector:@selector(didSendMMFace:)]) {
+[self.delegate didSendMMFace:emoji];
+}
 }
 
 //点击联想表情的代理
 - (void)didSelectTipEmoji:(MMEmoji *)emoji
 {
-    if ([self.delegate respondsToSelector:@selector(didSendMMFace:)]) {
-        [self.delegate didSendMMFace:emoji];
-        self.inputTextView.text = @"";
-    }
+if ([self.delegate respondsToSelector:@selector(didSendMMFace:)]) {
+[self.delegate didSendMMFace:emoji];
+self.inputTextView.text = @"";
+}
 }
 
 //点击表情小表情键盘上发送按钮的代理
 - (void)didSendWithInput:(UIResponder<UITextInput> *)input
 {
-    if ([self.delegate respondsToSelector:@selector(didSendText:)]) {
-        [self.delegate didSendText:_inputTextView.mmText];
-        self.inputTextView.text = @"";
-        [self _willShowInputTextViewToHeight:[self _getTextViewContentH:_inputTextView]];
-    }
+if ([self.delegate respondsToSelector:@selector(didSendText:)]) {
+[self.delegate didSendText:_inputTextView.mmText];
+self.inputTextView.text = @"";
+[self willShowInputTextViewToHeight:[self getTextViewContentH:self.inputTextView]];
+}
 }
 
 //点击输入框切换表情按钮状态
 - (void)tapOverlay
 {
-    self.faceButton.selected = NO;
+self.faceButton.selected = NO;
 }
-
 ```
 
-##3. 表情消息编辑和发送
-
-在`EaseMessageViewController`中实现大小表情消息的发送方法。
-
-###3.1 发送文字（包含小表情图文混排）消息
-修改原有文本消息的发送方法。
+## step8.实现实际发送消息的方法：
+**@Class**:EaseMessageViewController
 
 ```objectivec
+//发送图文混排消息
 - (void)sendTextMessage:(NSString *)text
 {
-    NSString *text_ = [text stringByReplacingOccurrencesOfString:@"\a" withString:@""];
-    [MMTextParser localParseMMText:text_ completionHandler:^(NSArray *textImgArray) {
-        NSDictionary *ext = nil;
-        NSString *sendStr = @"";
-        for (id obj in textImgArray) {
-            if ([obj isKindOfClass:[MMEmoji class]]) {
-                MMEmoji *emoji = (MMEmoji*)obj;
-                //表情mm 默认的扩展消息格式，"emojitype"代表小表情消息
-                if (!ext) {
-                    ext = @{@"txt_msgType":@"emojitype",
-                            @"msg_data":[MMTextParser extDataWithTextImageArray:textImgArray]};
-                }
-                //将emojiName显示在消息文本
-                sendStr = [sendStr stringByAppendingString:[NSString stringWithFormat:@"[%@]", emoji.emojiName]];
-            }
-            else if ([obj isKindOfClass:[NSString class]]) {
-                sendStr = [sendStr stringByAppendingString:obj];
-            }
-        }
-        [self sendTextMessage:sendStr withExt:ext];
-    }];
+NSString *text_ = [text stringByReplacingOccurrencesOfString:@"\a" withString:@""];
+[MMTextParser localParseMMText:text_ completionHandler:^(NSArray *textImgArray) {
+NSDictionary *mmExt = nil;
+NSString *sendStr = @"";
+for (id obj in textImgArray) {
+if ([obj isKindOfClass:[MMEmoji class]]) {
+MMEmoji *emoji = (MMEmoji*)obj;
+if (!mmExt) {
+mmExt = @{@"txt_msgType":@"emojitype",
+@"msg_data":[MMTextParser extDataWithTextImageArray:textImgArray]};
+}
+sendStr = [sendStr stringByAppendingString:[NSString stringWithFormat:@"[%@]", emoji.emojiName]];
+}
+else if ([obj isKindOfClass:[NSString class]]) {
+sendStr = [sendStr stringByAppendingString:obj];
+}
+}    [self sendTextMessage:sendStr withExt:mmExt];
+}];
 }
 
-- (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
-{
-    EMMessage *message = [EaseSDKHelper sendTextMessage:text
-                                                     to:self.conversation.chatter
-                                            messageType:[self _messageTypeFromConversationType]
-                                      requireEncryption:NO
-                                             messageExt:ext];
-    [self addMessageToDataSource:message
-                        progress:nil];
-}
+//发送单条大表情的方法
 
-```
-
-###3.2 发送大表情消息
-新增发送大表情的方法
-```objectivec
 -(void)sendMMFaceMessage:(MMEmoji *)emoji
 {
-    //表情mm 默认的扩展消息格式，"facetype"代表小表情消息
-    NSDictionary *ext = @{@"txt_msgType":@"facetype",
-                          @"msg_data":[MMTextParser extDataWithEmojiCode:emoji.emojiCode]};
-    [self sendMMFaceMessage:emoji withExt:ext];
+NSDictionary *mmExt = @{@"txt_msgType":@"facetype",
+@"msg_data":[MMTextParser extDataWithEmojiCode:emoji.emojiCode]};
+[self sendMMFaceMessage:emoji withExt:mmExt];
 }
 
--(void)sendMMFaceMessage:(MMEmoji *)emoji withExt:(NSDictionary*)ext
-{
-    EMMessage *message = [EaseSDKHelper sendTextMessage:[NSString stringWithFormat:@"[%@]", emoji.emojiName]
-                                                     to:self.conversation.chatter
-                                            messageType:[self _messageTypeFromConversationType]
-                                      requireEncryption:NO
-                                             messageExt:ext];
-    [self addMessageToDataSource:message
-                        progress:nil];
-}
 ```
 
+## Step9. 表情消息解析
+我们将表情显示部分的代码从表情云 SDK中分离出来，方便开发者根据自己的业务实现表情图片显示逻辑，同时我们提供了`MMTextView`类，作为表情消息解析和显示的示例。
 
-###3.3 实现消息编辑控件的复制和剪切
-在`EaseTextView`中新增下面两个方法
+首先，SDK在`MMTextParser`中提供从字符串解析表情的方法`parseMMText`和`localParseMMText`。
+
+**@Class** MMTextParser
 
 ```objectivec
-- (void)copy:(id)sender
-{
-    [UIPasteboard generalPasteboard].string = [self mmTextWithRange:self.selectedRange];
-}
-
-- (void)cut:(id)sender
-{
-    [UIPasteboard generalPasteboard].string = [self mmTextWithRange:self.selectedRange];
-    NSRange range  = [self.mmText rangeOfString:[UIPasteboard generalPasteboard].string];
-    NSString *left = [self.mmText substringToIndex:range.location];
-    NSString *right = [self.mmText substringFromIndex:range.location + range.length];
-    NSRange selectedRange = self.selectedRange;
-    self.mmText = [NSString stringWithFormat:@"%@%@", left, right];
-    self.selectedRange = NSMakeRange(selectedRange.location, 0);
-    [self.delegate textViewDidChange:self];
-}
++ (void)parseMMText:(NSString *)text completionHandler:(void(^)(NSArray *textImgArray))completionHandler;
++ (void)localParseMMText:(NSString *)text completionHandler:(void(^)(NSArray *textImgArray))completionHandler;
 ```
 
+`localParseMMText`只解析本地已下载的表情。
 
-###做什么用的啊
+参数`text`为需要解析的字符串，格式为`@"你好[hhd]"`方括号里是`emojiCode`。
+`completionHandler`回调的参数`textImgArray`是消息中字符串和`Emoji`对象的数组，例：`@[@"你好", <Emoji*>]`。
 
-`textView:shouldChangeTextInRange:replacementText:`中`textView.text`改成`textView.mmText`
+另外，SDK提供了`MMTextParser`的开源扩展`MMTextParser+ExtData`，可以实现`textImgArray`、`text`和`extData`的互相转换。
 
-###这又是做什么用的啊
-
-```
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    if ([text isEqualToString:@"\n"]) {
-        if ([self.delegate respondsToSelector:@selector(didSendText:)]) {
-            [self.delegate didSendText:textView.mmText];
-            self.inputTextView.text = @"";
-            [self _willShowInputTextViewToHeight:[self _getTextViewContentH:self.inputTextView]];;
-        }
-        
-        return NO;
-    }
-    return YES;
-}
-```
-
-
-###监听textView的Change事件
-textViewDidChange:修改成如下代码
-
+**@Class** MMTextParser+ExtData
 
 ```objectivec
-if (textView.markedTextRange == nil) {
-    NSRange range = textView.selectedRange;
-    textView.mmText = textView.mmText;
-    textView.selectedRange = range;
-}
-[self _willShowInputTextViewToHeight:[self _getTextViewContentH:textView]];
++ (NSArray *)extDataWithTextImageArray:(NSArray *)textImageArray;
++ (NSArray *)extDataWithEmojiCode:(NSString *)emojiCode;
++ (MMEmoji *)placeholderEmoji;
++ (NSString *)stringWithExtData:(NSArray *) extData;
 ```
 
-##自定义表情消息
-
-
-
-##4. 表情消息
-
-###添加查看表情详情
-
-`EaseMessageViewController`
-
-`messageCellSelected:`中 `case eMessageBodyType_Text:`加入如下代码，实现点击打开表情详情页。在详情页中，可直接下载相关表情包。
+[`extData`](#extData)是SDK推荐的用于解析的表情消息发送格式（在Demo中作为消息扩展`message.ext[@"msg_data"]`发送），格式是一个二维数组，内容为拆分完成的`text`和`emojiCode`，并且说明这段内容是否是一个`emojiCode`。例：
 
 ```objectivec
-if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-    //"facetype"代表大表情消息类型
-    [self.chatToolbar endEditing:YES];//在endEditing中关闭键盘
-    UIViewController *emojiController = [[MMEmotionCentre defaultCentre] controllerForEmotionCode:model.message.ext[@"msg_data"][0][0]];
-    [self.navigationController pushViewController:emojiController animated:YES];
-}
+@[@[@"你好", @"0"], @[@"hhd", @"1"]]
 ```
 
+`0`表示文本内容，`1`表示`emojiCode`。
 
-###实现表情消息的复制
-
-修改`ChatViewController`类中`copyMenuAction`方法。
-
-```
-- (void)copyMenuAction:(id)sender
-{
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    if (self.menuIndexPath && self.menuIndexPath.row > 0) {
-        id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
-        if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-            pasteboard.string = [MMTextParser stringWithExtData:model.message.ext[@"msg_data"]];
-        }
-        else {
-            pasteboard.string = model.text;
-        }
-    }
-    
-    self.menuIndexPath = nil;
-}
-```
+`placeholderEmoji`方法提供以占位图显示的小表情对象，在`MMTextView`中需要显示小表情时，都先显示一个`placeholderEmoji`，对应的表情图片会自动从服务器下载。
 
 
-EaseBaseMessageCell
+## Step10. 表情消息显示
 
-`layoutSubviews`中 `case eMessageBodyType_Text:`加入如下代码
+### 1.图文混排消息
+**@Class** MMTextView
 
-```
-if ([self.model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-    MMTextView *textView = [[MMTextView alloc] init];
-    textView.mmFont = [UIFont systemFontOfSize:15];
-    [textView setMmTextData:self.model.message.ext[@"msg_data"]];
-    CGSize retSize = [textView sizeThatFits:CGSizeMake(175, CGFLOAT_MAX)];
-    [self setBubbleWidth:retSize.width + 25];
-}
+**@Function** -(void)setMmTextData:(NSArray *)extData;
+
+### 2.大表情消息
+根据表情code获取emoji对象，emoji的成员对象emojiImage即是大表情图片
+
+**@Class** MMEmotionCentre
+
+**@Function** - (void)fetchEmojisByType:(MMFetchType)fetchType
+codes:(NSArray *)emojiCodes
+completionHandler:(void (^)(NSArray *emojis))completionHandler;
+
+## Step11. 添加表情详情页面
+在点击大表情消息时添加单个表情详情页面，在详情页面可以查看和下载表情包信息。
+
+**@Class** EaseMessageViewController
+
+**@Function** - (void)messageCellSelected:(id<IMessageModel>)model;
+
+```objectivec
+UIViewController *emojiController = [[MMEmotionCentre defaultCentre] controllerForEmotionCode:model.message.ext[@"msg_data"][0][0]];
+[self.navigationController pushViewController:emojiController animated:YES];
 ```
 
+## Step12. UI定制
+
+表情云 SDK通过`MMTheme`提供一定程度的UI定制。
+
+创建一个`MMTheme`对象，设置相关属性， 然后[[MMEmotionCentre defaultCentre] setTheme:]即可修改商店和键盘样式。
 
 
-EaseMessageCell
-`cellHeightWithModel:`中 `case eMessageBodyType_Text:`修改成如下代码
+## Step13. 设置APP UserId
 
-```
-if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-    MMTextView *textView = [[MMTextView alloc] init];
-    textView.mmFont = [UIFont systemFontOfSize:15];
-    [textView setPlaceholderTextWithData:model.message.ext[@"msg_data"]];
-    CGSize size = [textView sizeThatFits:CGSizeMake(bubbleMaxWidth, CGFLOAT_MAX)];
-    
-    height += size.height;
-}
-else {
-    NSString *text = model.text;
-    UIFont *textFont = cell.messageTextFont;
-    CGRect rect = [text boundingRectWithSize:CGSizeMake(bubbleMaxWidth, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading attributes:@{NSFontAttributeName:textFont} context:nil];
-    height += (rect.size.height > 20 ? rect.size.height : 20) + 10;
-}
-
-```
-
-
-###4.1 设置自定义消息Cell
-
-`EMBubbleView+MMText`
-
-
-在`CustomMessageCell`的方法中加入表情消息的处理。
-
-以下方法中加入txt_msgType的判断 具体代码参考demo（EMBubbleView+MMText类可以直接用demo中的）
-
-isCustomBubbleView:
-setCustomModel:
-setCustomBubbleView:
-updateCustomBubbleViewMargin:model:
-cellIdentifierWithModel:
-cellHeightWithModel:
-
-
-```
-- (BOOL)isCustomBubbleView:(id<IMessageModel>)model
-{
-    BOOL flag = NO;
-    switch (model.bodyType) {
-        case eMessageBodyType_Text:
-        {
-            if ([model.message.ext objectForKey:@"em_emotion"]) {
-                flag = YES;
-            }
-            else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-                flag = YES;
-            }
-            else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-                flag = YES;
-            }
-        }
-            break;
-        default:
-            break;
-    }
-    return flag;
-}
-
-- (void)setCustomModel:(id<IMessageModel>)model
-{
-    if ([model.message.ext objectForKey:@"em_emotion"]) {
-        UIImage *image = [EMGifImage imageNamed:[model.message.ext objectForKey:@"em_emotion"]];
-        if (!image) {
-            image = model.image;
-            if (!image) {
-                image = [UIImage imageNamed:model.failImageName];
-            }
-        }
-        _bubbleView.imageView.image = image;
-        [self.avatarView imageWithUsername:model.nickname placeholderImage:nil];
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-        [_bubbleView.textView setMmTextData:model.message.ext[@"msg_data"]];
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-        //大表情显示
-        self.bubbleView.imageView.image = [UIImage imageNamed:model.failImageName];
-        NSArray *codes = nil;
-        if (model.message.ext[@"msg_data"]) {
-            codes = @[model.message.ext[@"msg_data"][0][0]];
-        }
-        //兼容1.0之前（含）版本的消息格式
-        else {
-            codes = @[model.text];
-        }
-        __weak typeof(self) weakSelf = self;
-        [[MMEmotionCentre defaultCentre] fetchEmojisByType:MMFetchTypeBig codes:codes completionHandler:^(NSArray *emojis, NSError *error) {
-            if (emojis.count > 0) {
-                MMEmoji *emoji = emojis[0];
-                if ([weakSelf.model.message.ext[@"msg_data"][0][0] isEqualToString:emoji.emojiCode]) {
-                    weakSelf.bubbleView.imageView.image = emoji.emojiImage;
-                }
-            }
-            else {
-                weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_error.png"];
-            }
-        }];
-        [self.avatarView imageWithUsername:model.nickname placeholderImage:nil];
-    }
-}
-
-- (void)setCustomBubbleView:(id<IMessageModel>)model
-{
-    if ([model.message.ext objectForKey:@"em_emotion"]) {
-        [_bubbleView setupGifBubbleView];
-        
-        _bubbleView.imageView.image = [UIImage imageNamed:model.failImageName];
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-        [_bubbleView setupMMTextBubbleViewWithModel:model];
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-        [_bubbleView setupGifBubbleView];
-        
-        _bubbleView.imageView.image = [UIImage imageNamed:model.failImageName];
-    }
-}
-
-- (void)updateCustomBubbleViewMargin:(UIEdgeInsets)bubbleMargin model:(id<IMessageModel>)model
-{
-    if ([model.message.ext objectForKey:@"em_emotion"]) {
-        [_bubbleView updateGifMargin:bubbleMargin];
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-        [_bubbleView updateMMTextMargin:bubbleMargin];
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-        [_bubbleView updateGifMargin:bubbleMargin];
-    }
-}
-
-
-+ (NSString *)cellIdentifierWithModel:(id<IMessageModel>)model
-{
-    if ([model.message.ext objectForKey:@"em_emotion"]) {
-        return model.isSender?@"EaseMessageCellSendGif":@"EaseMessageCellRecvGif";
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-        return model.isSender?@"EaseMessageCellSendMMText":@"EaseMessageCellRecvMMText";
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-        return model.isSender?@"EaseMessageCellSendGif":@"EaseMessageCellRecvGif";
-    }
-    else {
-        NSString *identifier = [EaseBaseMessageCell cellIdentifierWithModel:model];
-        return identifier;
-    }
-}
-
-+ (CGFloat)cellHeightWithModel:(id<IMessageModel>)model
-{
-    if ([model.message.ext objectForKey:@"em_emotion"]) {
-        return 100;
-    }
-    else if ([model.message.ext[@"txt_msgType"] isEqualToString:@"facetype"]) {
-        return kEMMessageImageSizeHeight;
-    }
-    else {
-        CGFloat height = [EaseBaseMessageCell cellHeightWithModel:model];
-        return height;
-    }
-}
-```
+开发者可以用`setUserId`方法设置App UserId，以便在后台统计时跟踪追溯单个用户的表情使用情况。
