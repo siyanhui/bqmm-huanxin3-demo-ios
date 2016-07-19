@@ -1,3 +1,6 @@
+# 说明：
+- 下载Demo后解压根目录下的`HyphenateFullSDK.zip`
+- 将appDelegate中[[MMEmotionCentre defaultCentre] setAppId:@“your app id” secret:@“your secret”]设置成分配到的`id`和`secret`。
 
 # 表情云 SDK接入文档
 ## 表情云 SDK简介
