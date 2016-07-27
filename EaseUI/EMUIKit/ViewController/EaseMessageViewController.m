@@ -29,7 +29,7 @@
 
 //BQMM集成
 #import <BQMM/BQMM.h>
-#import "MMTextParser+ExtData.h"
+#import "MMTextParser.h"
 
 
 #define KHintAdjustY    50
@@ -1210,24 +1210,31 @@
 }
 
 - (void)didSendTextMessageWithTextView:(UITextView *)textView {
-    NSString *text_ = [textView.mmText stringByReplacingOccurrencesOfString:@"\a" withString:@""];
-    [MMTextParser localParseMMText:text_ completionHandler:^(NSArray *textImgArray) {
-        NSDictionary *mmExt = nil;
-        NSString *sendStr = @"";
-        for (id obj in textImgArray) {
-            if ([obj isKindOfClass:[MMEmoji class]]) {
-                MMEmoji *emoji = (MMEmoji*)obj;
-                if (!mmExt) {
-                    mmExt = @{@"txt_msgType":@"emojitype",
-                              @"msg_data":[MMTextParser extDataWithTextImageArray:textImgArray]};
+    NSString *sendStr = textView.characterMMText;
+    NSMutableDictionary *ext = [NSMutableDictionary dictionary];
+    if (self.conversation.type == EMConversationTypeGroupChat) {
+        NSArray *targets = [self _searchAtTargets:sendStr];
+        if ([targets count]) {
+            __block BOOL atAll = NO;
+            [targets enumerateObjectsUsingBlock:^(NSString *target, NSUInteger idx, BOOL *stop) {
+                if ([target compare:kGroupMessageAtAll options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+                    atAll = YES;
+                    *stop = YES;
                 }
-                sendStr = [sendStr stringByAppendingString:[NSString stringWithFormat:@"[%@]", emoji.emojiName]];
+            }];
+            if (atAll) {
+                ext[kGroupMessageAtList] = kGroupMessageAtAll;
             }
-            else if ([obj isKindOfClass:[NSString class]]) {
-                sendStr = [sendStr stringByAppendingString:obj];
+            else {
+                ext[kGroupMessageAtList] = targets;
             }
-        }    [self sendTextMessage:sendStr withExt:mmExt];
-    }];
+        }
+    }
+    NSArray *textImgArray = textView.textImgArray;
+    NSDictionary *mmExt = @{@"txt_msgType":@"emojitype",
+                            @"msg_data":[MMTextParser extDataWithTextImageArray:textImgArray]};;
+    [ext addEntriesFromDictionary:mmExt];
+    [self sendTextMessage:sendStr withExt:ext];
 }
 
 - (BOOL)didInputAtInLocation:(NSUInteger)location
@@ -1811,7 +1818,7 @@
 -(void)sendMMFaceMessage:(MMEmoji *)emoji
 {
     NSDictionary *mmExt = @{@"txt_msgType":@"facetype",
-                            @"msg_data":[MMTextParser extDataWithEmojiCode:emoji.emojiCode]};
+                            @"msg_data":[MMTextParser extDataWithEmoji:emoji]};
     [self sendMMFaceMessage:emoji withExt:mmExt];
 }
 

@@ -319,7 +319,7 @@ span { display: inline-block; }
   </h1>
 <pre>
 <span class="bold">diff --git a/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/AppDelegate.m b/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/AppDelegate.m
-index 51ba488..5b8ff4d 100755</span>
+index 51ba488..f770e1d 100755</span>
 <span class="bold">--- a/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/AppDelegate.m</span>
 <span class="bold">+++ b/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/AppDelegate.m</span>
 <span class="f6">@@ -22,6 +22,11 @@</span>
@@ -340,8 +340,8 @@ index 51ba488..5b8ff4d 100755</span>
 
     <span class="f2">//BQMM集成</span>
 <span class="f2">    // 初始化表情MMSDK</span>
-<span class="f2">    [[MMEmotionCentre defaultCentre] setAppId:@&quot;yourid&quot;</span>
-<span class="f2">                                       secret:@&quot;yourSecret&quot;];</span>
+<span class="f2">    [[MMEmotionCentre defaultCentre] setAppId:@&quot;appId&quot;</span>
+<span class="f2">                                       secret:@&quot;appSecret&quot;];</span>
 <span class="f2">    </span>
 <span class="f2">    //初始化bugly</span>
 <span class="f2">    [Bugly startWithAppId:@&quot;900019325&quot;];</span>
@@ -350,7 +350,7 @@ index 51ba488..5b8ff4d 100755</span>
 #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
     NSString *apnsCertName = nil;
 <span class="bold">diff --git a/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/Chat/ChatView/ChatViewController.m b/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/Chat/ChatView/ChatViewController.m
-index 083fe7f..a5cd293 100644</span>
+index 083fe7f..bf0cbbf 100644</span>
 <span class="bold">--- a/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/Chat/ChatView/ChatViewController.m</span>
 <span class="bold">+++ b/ChatDemo-UI3.0/ChatDemo-UI3.0/Class/Chat/ChatView/ChatViewController.m</span>
 <span class="f6">@@ -21,6 +21,9 @@</span>
@@ -358,7 +358,7 @@ index 083fe7f..a5cd293 100644</span>
 #import &quot;ContactSelectionViewController.h&quot;
 
 <span class="f2">//BQMM集成</span>
-<span class="f2">#import &quot;MMTextParser+ExtData.h&quot;</span>
+<span class="f2">#import &quot;MMTextParser.h&quot;</span>
 
 @interface ChatViewController ()&lt;UIAlertViewDelegate,EMClientDelegate, EMChooseViewDelegate&gt;
 {
@@ -410,6 +410,68 @@ index 1b18086..1c2fafa 100644</span>
             EMMessage *message = [EaseSDKHelper sendTextMessage:self.messageModel.text to:userModel.buddy messageType:EMChatTypeChat messageExt:self.messageModel.message.ext];
             __weak typeof(self) weakself = self;
             [[EMClient sharedClient].chatManager asyncSendMessage:message progress:nil completion:^(EMMessage *aMessage, EMError *aError) {
+<span class="bold">diff --git a/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_error.imageset/Contents.json b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_error.imageset/Contents.json
+new file mode 100644</span>
+<span class="bold">index 0000000..df39f37</span>
+<span class="bold">--- /dev/null</span>
+<span class="bold">+++ b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_error.imageset/Contents.json</span>
+<span class="f6">@@ -0,0 +1,21 @@</span>
+<span class="f2">{</span>
+<span class="f2">  &quot;images&quot; : [</span>
+<span class="f2">    {</span>
+<span class="f2">      &quot;idiom&quot; : &quot;universal&quot;,</span>
+<span class="f2">      &quot;scale&quot; : &quot;1x&quot;</span>
+<span class="f2">    },</span>
+<span class="f2">    {</span>
+<span class="f2">      &quot;idiom&quot; : &quot;universal&quot;,</span>
+<span class="f2">      &quot;filename&quot; : &quot;mm_emoji_error@2x.png&quot;,</span>
+<span class="f2">      &quot;scale&quot; : &quot;2x&quot;</span>
+<span class="f2">    },</span>
+<span class="f2">    {</span>
+<span class="f2">      &quot;idiom&quot; : &quot;universal&quot;,</span>
+<span class="f2">      &quot;scale&quot; : &quot;3x&quot;</span>
+<span class="f2">    }</span>
+<span class="f2">  ],</span>
+<span class="f2">  &quot;info&quot; : {</span>
+<span class="f2">    &quot;version&quot; : 1,</span>
+<span class="f2">    &quot;author&quot; : &quot;xcode&quot;</span>
+<span class="f2">  }</span>
+<span class="f2">}</span>
+<span class="bold">diff --git a/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_error.imageset/mm_emoji_error@2x.png b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_error.imageset/mm_emoji_error@2x.png
+new file mode 100644</span>
+<span class="bold">index 0000000..cef525a</span>
+Binary files /dev/null and b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_error.imageset/mm_emoji_error@2x.png differ
+<span class="bold">diff --git a/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_loading.imageset/Contents.json b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_loading.imageset/Contents.json</span>
+<span class="bold">new file mode 100644</span>
+<span class="bold">index 0000000..c00ac8d</span>
+<span class="bold">--- /dev/null</span>
+<span class="bold">+++ b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_loading.imageset/Contents.json</span>
+<span class="f6">@@ -0,0 +1,21 @@</span>
+<span class="f2">{</span>
+<span class="f2">  &quot;images&quot; : [</span>
+<span class="f2">    {</span>
+<span class="f2">      &quot;idiom&quot; : &quot;universal&quot;,</span>
+<span class="f2">      &quot;scale&quot; : &quot;1x&quot;</span>
+<span class="f2">    },</span>
+<span class="f2">    {</span>
+<span class="f2">      &quot;idiom&quot; : &quot;universal&quot;,</span>
+<span class="f2">      &quot;filename&quot; : &quot;mm_emoji_loading@2x.png&quot;,</span>
+<span class="f2">      &quot;scale&quot; : &quot;2x&quot;</span>
+<span class="f2">    },</span>
+<span class="f2">    {</span>
+<span class="f2">      &quot;idiom&quot; : &quot;universal&quot;,</span>
+<span class="f2">      &quot;scale&quot; : &quot;3x&quot;</span>
+<span class="f2">    }</span>
+<span class="f2">  ],</span>
+<span class="f2">  &quot;info&quot; : {</span>
+<span class="f2">    &quot;version&quot; : 1,</span>
+<span class="f2">    &quot;author&quot; : &quot;xcode&quot;</span>
+<span class="f2">  }</span>
+<span class="f2">}</span>
+<span class="bold">diff --git a/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_loading.imageset/mm_emoji_loading@2x.png b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_loading.imageset/mm_emoji_loading@2x.png
+new file mode 100644</span>
+<span class="bold">index 0000000..1a28820</span>
+Binary files /dev/null and b/ChatDemo-UI3.0/ChatDemo-UI3.0/Images.xcassets/mm_emoji_loading.imageset/mm_emoji_loading@2x.png differ
 <span class="bold">diff --git a/EaseUI/EMUIKit/Model/EaseMessageModel.h b/EaseUI/EMUIKit/Model/EaseMessageModel.h</span>
 <span class="bold">index 0b4099f..be0a6fa 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/Model/EaseMessageModel.h</span>
@@ -993,7 +1055,7 @@ index 1b18086..1c2fafa 100644</span>
 
 @end
 <span class="bold">diff --git a/EaseUI/EMUIKit/ViewController/EaseMessageViewController.m b/EaseUI/EMUIKit/ViewController/EaseMessageViewController.m</span>
-<span class="bold">index 766c1f4..b7adde4 100644</span>
+<span class="bold">index 766c1f4..8674925 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/ViewController/EaseMessageViewController.m</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/ViewController/EaseMessageViewController.m</span>
 <span class="f6">@@ -27,6 +27,11 @@</span>
@@ -1002,7 +1064,7 @@ index 1b18086..1c2fafa 100644</span>
 
 <span class="f2">//BQMM集成</span>
 <span class="f2">#import &lt;BQMM/BQMM.h&gt;</span>
-<span class="f2">#import &quot;MMTextParser+ExtData.h&quot;</span>
+<span class="f2">#import &quot;MMTextParser.h&quot;</span>
 
 
 #define KHintAdjustY    50
@@ -1035,7 +1097,42 @@ index 1b18086..1c2fafa 100644</span>
         case EMMessageBodyTypeImage:
         {
             _scrollToBottomWhenAppear = NO;
-<span class="f6">@@ -1268,6 +1286,20 @@</span> - (void)didSendText:(NSString *)text withExt:(NSDictionary*)ext
+<span class="f6">@@ -1191,6 +1209,34 @@</span> - (void)didSendText:(NSString *)text
+    }
+}
+
+<span class="f2">- (void)didSendTextMessageWithTextView:(UITextView *)textView {</span>
+<span class="f2">    NSString *sendStr = textView.characterMMText;</span>
+<span class="f2">    NSMutableDictionary *ext = [NSMutableDictionary dictionary];</span>
+<span class="f2">    if (self.conversation.type == EMConversationTypeGroupChat) {</span>
+<span class="f2">        NSArray *targets = [self _searchAtTargets:sendStr];</span>
+<span class="f2">        if ([targets count]) {</span>
+<span class="f2">            __block BOOL atAll = NO;</span>
+<span class="f2">            [targets enumerateObjectsUsingBlock:^(NSString *target, NSUInteger idx, BOOL *stop) {</span>
+<span class="f2">                if ([target compare:kGroupMessageAtAll options:NSCaseInsensitiveSearch] == NSOrderedSame) {</span>
+<span class="f2">                    atAll = YES;</span>
+<span class="f2">                    *stop = YES;</span>
+<span class="f2">                }</span>
+<span class="f2">            }];</span>
+<span class="f2">            if (atAll) {</span>
+<span class="f2">                ext[kGroupMessageAtList] = kGroupMessageAtAll;</span>
+<span class="f2">            }</span>
+<span class="f2">            else {</span>
+<span class="f2">                ext[kGroupMessageAtList] = targets;</span>
+<span class="f2">            }</span>
+<span class="f2">        }</span>
+<span class="f2">    }</span>
+<span class="f2">    NSArray *textImgArray = textView.textImgArray;</span>
+<span class="f2">    NSDictionary *mmExt = @{@&quot;txt_msgType&quot;:@&quot;emojitype&quot;,</span>
+<span class="f2">                            @&quot;msg_data&quot;:[MMTextParser extDataWithTextImageArray:textImgArray]};;</span>
+<span class="f2">    [ext addEntriesFromDictionary:mmExt];</span>
+<span class="f2">    [self sendTextMessage:sendStr withExt:ext];</span>
+<span class="f2">}</span>
+
+- (BOOL)didInputAtInLocation:(NSUInteger)location
+{
+    if ([self.delegate respondsToSelector:@selector(messageViewController:selectAtTarget:)] &amp;&amp; self.conversation.type == EMConversationTypeGroupChat) {
+<span class="f6">@@ -1268,6 +1314,20 @@</span> - (void)didSendText:(NSString *)text withExt:(NSDictionary*)ext
     }
 }
 
@@ -1056,7 +1153,7 @@ index 1b18086..1c2fafa 100644</span>
 - (void)didStartRecordingVoiceAction:(UIView *)recordView
 {
     if ([self.delegate respondsToSelector:@selector(messageViewController:didSelectRecordView:withEvenType:)]) {
-<span class="f6">@@ -1560,10 +1592,16 @@</span> - (void)proximitySensorChanged:(BOOL)isCloseToUser
+<span class="f6">@@ -1560,10 +1620,16 @@</span> - (void)proximitySensorChanged:(BOOL)isCloseToUser
 
 - (void)copyMenuAction:(id)sender
 {
@@ -1073,53 +1170,37 @@ index 1b18086..1c2fafa 100644</span>
     }
 
     self.menuIndexPath = nil;
-<span class="f6">@@ -1737,9 +1775,10 @@</span> - (void)_sendMessage:(EMMessage *)message
+<span class="f6">@@ -1737,30 +1803,7 @@</span> - (void)_sendMessage:(EMMessage *)message
     }];
 }
 
-<span class="f2">//BQMM集成</span>
-- (void)sendTextMessage:(NSString *)text
-{
-    <span class="f1">NSDictionary</span><span class="f2">NSMutableDictionary</span> *ext = nil;
-    if (self.conversation.type == EMConversationTypeGroupChat) {
-        NSArray *targets = [self _searchAtTargets:text];
-        if ([targets count]) {
-<span class="f6">@@ -1751,14 +1790,34 @@</span> - (void)sendTextMessage:(NSString *)text
-                }
-            }];
-            if (atAll) {
-                ext<span class="f1">= @{</span><span class="f2">[</span>kGroupMessageAtList<span class="f1">:</span><span class="f2">] =</span> kGroupMessageAtAll<span class="f1">}</span>;
-            }
-            else {
-                ext<span class="f1">= @{</span><span class="f2">[</span>kGroupMessageAtList<span class="f1">:</span><span class="f2">] =</span> targets<span class="f1">}</span>;
-            }
-        }
-    }
-
-    <span class="f2">NSString *text_ = [text stringByReplacingOccurrencesOfString:@&quot;\a&quot; withString:@&quot;&quot;];</span>
-<span class="f2">    [MMTextParser localParseMMText:text_ completionHandler:^(NSArray *textImgArray) {</span>
-<span class="f2">        NSDictionary *mmExt = nil;</span>
-<span class="f2">        NSString *sendStr = @&quot;&quot;;</span>
-<span class="f2">        for (id obj in textImgArray) {</span>
-<span class="f2">            if ([obj isKindOfClass:[MMEmoji class]]) {</span>
-<span class="f2">                MMEmoji *emoji = (MMEmoji*)obj;</span>
-<span class="f2">                if (!mmExt) {</span>
-<span class="f2">                    mmExt = @{@&quot;txt_msgType&quot;:@&quot;emojitype&quot;,</span>
-<span class="f2">                              @&quot;msg_data&quot;:[MMTextParser extDataWithTextImageArray:textImgArray]};</span>
-<span class="f2">                }</span>
-<span class="f2">                sendStr = [sendStr stringByAppendingString:[NSString stringWithFormat:@&quot;[%@]&quot;, emoji.emojiName]];</span>
-<span class="f2">            }</span>
-<span class="f2">            else if ([obj isKindOfClass:[NSString class]]) {</span>
-<span class="f2">                sendStr = [sendStr stringByAppendingString:obj];</span>
-<span class="f2">            }</span>
-<span class="f2">        }</span>
-<span class="f2">        [ext addEntriesFromDictionary:mmExt];</span>
-        [self sendTextMessage:<span class="f1">text</span><span class="f2">sendStr</span> withExt:ext];
-    <span class="f2">}];</span>
-}
-
+<span class="f1">- (void)sendTextMessage:(NSString *)text</span>
+<span class="f1">{</span>
+<span class="f1">    NSDictionary *ext = nil;</span>
+<span class="f1">    if (self.conversation.type == EMConversationTypeGroupChat) {</span>
+<span class="f1">        NSArray *targets = [self _searchAtTargets:text];</span>
+<span class="f1">        if ([targets count]) {</span>
+<span class="f1">            __block BOOL atAll = NO;</span>
+<span class="f1">            [targets enumerateObjectsUsingBlock:^(NSString *target, NSUInteger idx, BOOL *stop) {</span>
+<span class="f1">                if ([target compare:kGroupMessageAtAll options:NSCaseInsensitiveSearch] == NSOrderedSame) {</span>
+<span class="f1">                    atAll = YES;</span>
+<span class="f1">                    *stop = YES;</span>
+<span class="f1">                }</span>
+<span class="f1">            }];</span>
+<span class="f1">            if (atAll) {</span>
+<span class="f1">                ext = @{kGroupMessageAtList: kGroupMessageAtAll};</span>
+<span class="f1">            }</span>
+<span class="f1">            else {</span>
+<span class="f1">                ext = @{kGroupMessageAtList: targets};</span>
+<span class="f1">            }</span>
+<span class="f1">        }</span>
+<span class="f1">    }</span>
+<span class="f1">    [self sendTextMessage:text withExt:ext];</span>
+<span class="f1">}</span><span class="f2">//BQMM集成</span>
 - (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
-<span class="f6">@@ -1770,6 +1829,25 @@</span> - (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
+{
+    EMMessage *message = [EaseSDKHelper sendTextMessage:text
+<span class="f6">@@ -1770,6 +1813,25 @@</span> - (void)sendTextMessage:(NSString *)text withExt:(NSDictionary*)ext
     [self _sendMessage:message];
 }
 
@@ -1175,10 +1256,10 @@ index 1b18086..1c2fafa 100644</span>
 <span class="f2">@end</span>
 <span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/MessageCell/EMBubbleView+MMText.m b/EaseUI/EMUIKit/Views/conversation/MessageCell/EMBubbleView+MMText.m</span>
 <span class="bold">new file mode 100644</span>
-<span class="bold">index 0000000..c55e7e3</span>
+<span class="bold">index 0000000..ad6b0d7</span>
 <span class="bold">--- /dev/null</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/MessageCell/EMBubbleView+MMText.m</span>
-<span class="f6">@@ -0,0 +1,73 @@</span>
+<span class="f6">@@ -0,0 +1,74 @@</span>
 <span class="f2">//</span>
 <span class="f2">//  EMBubbleView+MMText.m</span>
 <span class="f2">//  ChatDemo-UI3.0</span>
@@ -1233,6 +1314,7 @@ index 1b18086..1c2fafa 100644</span>
 <span class="f2">{</span>
 <span class="f2">    self.textView = [[MMTextView alloc] init];</span>
 <span class="f2">    self.textView.mmFont = [UIFont systemFontOfSize:15];</span>
+<span class="f2">    self.textView.mmTextColor = [UIColor blackColor];</span>
 <span class="f2">    self.textView.translatesAutoresizingMaskIntoConstraints = NO;</span>
 <span class="f2">    self.textView.backgroundColor = [UIColor clearColor];</span>
 <span class="f2">    [self.backgroundImageView addSubview:self.textView];</span>
@@ -1253,7 +1335,7 @@ index 1b18086..1c2fafa 100644</span>
 
 <span class="f2">@end</span>
 <span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseBaseMessageCell.m b/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseBaseMessageCell.m</span>
-<span class="bold">index ffd78bc..b9e452c 100644</span>
+<span class="bold">index ffd78bc..3d9f90c 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseBaseMessageCell.m</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseBaseMessageCell.m</span>
 <span class="f6">@@ -14,6 +14,12 @@</span>
@@ -1264,7 +1346,7 @@ index 1b18086..1c2fafa 100644</span>
 <span class="f2">#import &quot;MMTextView.h&quot;</span>
 
 <span class="f2">#import &lt;BQMM/BQMM.h&gt;</span>
-<span class="f2">#import &quot;MMTextParser+ExtData.h&quot;</span>
+<span class="f2">#import &quot;MMTextParser.h&quot;</span>
 
 @interface EaseBaseMessageCell()
 
@@ -1289,7 +1371,7 @@ index 1b18086..1c2fafa 100644</span>
             break;
         case EMMessageBodyTypeImage:
 <span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseCustomMessageCell.m b/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseCustomMessageCell.m</span>
-<span class="bold">index f809414..8e99271 100644</span>
+<span class="bold">index f809414..28be388 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseCustomMessageCell.m</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseCustomMessageCell.m</span>
 <span class="f6">@@ -16,6 +16,12 @@</span>
@@ -1305,7 +1387,7 @@ index 1b18086..1c2fafa 100644</span>
 @interface EaseCustomMessageCell ()
 
 @end
-<span class="f6">@@ -28,19 +34,60 @@</span> + (void)initialize
+<span class="f6">@@ -28,19 +34,70 @@</span> + (void)initialize
 }
 
 #pragma mark - IModelCell
@@ -1339,34 +1421,44 @@ index 1b18086..1c2fafa 100644</span>
     <span class="f1">UIImage *image =</span><span class="f2">if ([</span>model.<span class="f1">image</span><span class="f2">mmExt[@&quot;txt_msgType&quot;] isEqualToString:@&quot;emojitype&quot;]) {</span>
 <span class="f2">        [_bubbleView.textView setMmTextData:model.mmExt[@&quot;msg_data&quot;]]</span>;
     <span class="f2">}</span>
-<span class="f2">    else</span> if (<span class="f1">!image</span><span class="f2">[model.mmExt[@&quot;txt_msgType&quot;] isEqualToString:@&quot;facetype&quot;]</span>) {
-        <span class="f1">[</span><span class="f2">//大表情显示</span>
-        self.bubbleView.imageView<span class="f1">sd_setImageWithURL:</span><span class="f2">.image =</span> [<span class="f1">NSURL URLWithString</span><span class="f2">UIImage imageNamed</span>:<span class="f2">@&quot;mm_emoji_loading&quot;];</span>
+<span class="f2">    else</span> if (<span class="f1">!</span><span class="f2">[model.mmExt[@&quot;txt_msgType&quot;] isEqualToString:@&quot;facetype&quot;]) {</span>
+<span class="f2">        //大表情显示</span>
+<span class="f2">        self.bubbleView.imageView.</span>image <span class="f2">= [UIImage imageNamed:@&quot;mm_emoji_loading&quot;];</span>
 <span class="f2">        NSArray *codes = nil;</span>
-<span class="f2">        if (</span>model<span class="f1">.fileURLPath</span><span class="f2">.mmExt[@&quot;msg_data&quot;</span>]<span class="f1">placeholderImage:</span><span class="f2">) {</span>
-<span class="f2">            codes = @</span>[<span class="f1">UIImage imageNamed:</span>model<span class="f1">.failImageName</span><span class="f2">.mmExt[@&quot;msg_data&quot;][0][0</span>]];
-        }
-        <span class="f2">//兼容1.0之前（含）版本的消息格式</span>
-        else {
-            <span class="f1">_bubbleView</span><span class="f2">codes = @[model.text];</span>
+<span class="f2">        if (model.mmExt[@&quot;msg_data&quot;]</span>) {
+            <span class="f2">codes = @[model.mmExt[@&quot;msg_data&quot;]</span>[<span class="f2">0][0]];</span>
 <span class="f2">        }</span>
+<span class="f2">        //兼容1.0之前（含）版本的消息格式</span>
+<span class="f2">        else {</span>
+<span class="f2">            codes = @[model.text];</span>
+<span class="f2">        }</span>
+        self.bubbleView.imageView<span class="f1">sd_setImageWithURL:</span><span class="f2">.tag ++;</span>
+<span class="f2">        __block NSInteger tag = self.bubbleView.imageView.tag;</span>
 <span class="f2">        __weak typeof(self) weakSelf = self;</span>
-<span class="f2">        [[MMEmotionCentre defaultCentre] fetchEmojisByType:MMFetchTypeBig codes:codes completionHandler:^(NSArray *emojis) {</span>
+        [<span class="f1">NSURL URLWithString</span><span class="f2">[MMEmotionCentre defaultCentre] fetchEmojisByType:MMFetchTypeBig codes</span>:<span class="f2">codes completionHandler:^(NSArray *emojis) {</span>
+<span class="f2">            if (tag != weakSelf.bubbleView.imageView.tag) {</span>
+<span class="f2">                return;</span>
+<span class="f2">            }</span>
 <span class="f2">            if (emojis.count &gt; 0) {</span>
 <span class="f2">                MMEmoji *emoji = emojis[0];</span>
-<span class="f2">                if ([weakSelf.model.mmExt[@&quot;msg_data&quot;][0][0] isEqualToString:emoji.emojiCode]) {</span>
-<span class="f2">                    weakSelf.bubbleView</span>.imageView.image = <span class="f2">emoji.emojiImage;</span>
-<span class="f2">                }</span>
+<span class="f2">                if ([weakSelf.</span>model<span class="f1">.fileURLPath</span><span class="f2">.mmExt[@&quot;msg_data&quot;</span>]<span class="f1">placeholderImage</span><span class="f2">[0][0] isEqualToString</span>:<span class="f2">emoji.emojiCode]) {</span>
+<span class="f2">                    if (emoji.emojiImage) {</span>
+<span class="f2">                        weakSelf.bubbleView.imageView.image = emoji.emojiImage;</span>
+<span class="f2">                    }else{</span>
+<span class="f2">                        NSLog(@&quot;weakSelf.bubbleView.imageView.image =</span> [UIImage imageNamed:<span class="f1">model.failImageName</span><span class="f2">@mm_emoji_error</span>]<span class="f2">&quot;);</span>
+<span class="f2">                        weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@&quot;mm_emoji_error&quot;</span>];
+                    }
+                <span class="f2">}</span>
 <span class="f2">            }</span>
-<span class="f2">            else {</span>
-<span class="f2">                weakSelf.bubbleView.imageView.</span>image <span class="f2">= [UIImage imageNamed:@&quot;mm_emoji_error&quot;];</span>
+            else {
+                <span class="f1">_bubbleView</span><span class="f2">weakSelf.bubbleView</span>.imageView.image = <span class="f1">image</span><span class="f2">[UIImage imageNamed:@&quot;mm_emoji_error&quot;];</span>
 <span class="f2">            }</span>
 <span class="f2">        }]</span>;
 
     }
 
     if (model.avatarURLPath) {
-<span class="f6">@@ -50,26 +97,67 @@</span> - (void)setCustomModel:(id&lt;IMessageModel&gt;)model
+<span class="f6">@@ -50,26 +107,67 @@</span> - (void)setCustomModel:(id&lt;IMessageModel&gt;)model
     }
 }
 
@@ -1450,7 +1542,7 @@ index 1b18086..1c2fafa 100644</span>
 
 @property (nonatomic) UIEdgeInsets leftBubbleMargin UI_APPEARANCE_SELECTOR; //default UIEdgeInsetsMake(8, 15, 8, 10);
 <span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseMessageCell.m b/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseMessageCell.m</span>
-<span class="bold">index 0376da9..00659d8 100644</span>
+<span class="bold">index 0376da9..aad429f 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseMessageCell.m</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/MessageCell/EaseMessageCell.m</span>
 <span class="f6">@@ -22,6 +22,10 @@</span>
@@ -1459,7 +1551,7 @@ index 1b18086..1c2fafa 100644</span>
 
 <span class="f2">//BQMM集成</span>
 <span class="f2">#import &quot;MMTextView.h&quot;</span>
-<span class="f2">#import &quot;MMTextParser+ExtData.h&quot;</span>
+<span class="f2">#import &quot;MMTextParser.h&quot;</span>
 
 CGFloat const EaseMessageCellPadding = 10;
 
@@ -1531,7 +1623,7 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
             break;
         case EMMessageBodyTypeImage:
 <span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.h b/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.h</span>
-<span class="bold">index 03d737f..d842ae4 100644</span>
+<span class="bold">index 03d737f..73a2cab 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.h</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.h</span>
 <span class="f6">@@ -22,7 +22,8 @@</span>
@@ -1543,7 +1635,11 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
 
 @protocol EMChatToolbarDelegate;
 @interface EaseChatToolbar : UIView
-<span class="f6">@@ -91,6 +92,22 @@</span>
+<span class="f6">@@ -89,8 +90,26 @@</span>
+
+- (void)didSendText:(NSString *)text;
+
+<span class="f2">- (void)didSendTextMessageWithTextView:(UITextView *)textView;</span>
 
 - (void)didSendText:(NSString *)text withExt:(NSDictionary*)ext;
 
@@ -1567,7 +1663,7 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
 
 - (BOOL)didDeleteCharacterFromLocation:(NSUInteger)location;
 <span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.m b/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.m</span>
-<span class="bold">index c6e9afc..85f2d72 100644</span>
+<span class="bold">index c6e9afc..8ed5eca 100644</span>
 <span class="bold">--- a/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.m</span>
 <span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/toolbar/EaseChatToolbar.m</span>
 <span class="f6">@@ -18,7 +18,10 @@</span>
@@ -1615,30 +1711,42 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
 
     _delegate = nil;
     _inputTextView.delegate = nil;
-<span class="f6">@@ -523,7 +540,8 @@</span> - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range r
+<span class="f6">@@ -409,9 +426,7 @@</span> - (void)_willShowInputTextViewToHeight:(CGFloat)toHeight
+        rect.size.height += changeHeight;
+        self.toolbarView.frame = rect;
+
+<span class="f1">if (self.version &lt; 7.0) {</span>        [self.inputTextView setContentOffset:CGPointMake(0.0f, (self.inputTextView.contentSize.height - self.inputTextView.frame.size.height) / 2) animated:<span class="f1">YES</span><span class="f2">NO</span>];<span class="f1">}</span>
+        _previousTextViewContentHeight = toHeight;
+
+        if (_delegate &amp;&amp; [_delegate respondsToSelector:@selector(chatToolbarDidChangeFrameToHeight:)]) {
+<span class="f6">@@ -523,7 +538,14 @@</span> - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range r
 {
     if ([text isEqualToString:@&quot;\n&quot;]) {
         if ([self.delegate respondsToSelector:@selector(didSendText:)]) {
             <span class="f2">//BQMM集成</span>
-            [self.delegate didSendText:textView.<span class="f1">text</span><span class="f2">mmText</span>];
+<span class="f2">            NSString *sendStr = self.inputTextView.characterMMText;</span>
+<span class="f2">            sendStr = [sendStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];</span>
+<span class="f2">            if (![sendStr isEqualToString:@&quot;&quot;]) {</span>
+<span class="f2">                if ([self.delegate respondsToSelector:@selector(didSendTextMessageWithTextView:)]) {</span>
+                    [self.delegate <span class="f1">didSendText</span><span class="f2">didSendTextMessageWithTextView</span>:<span class="f1">textView</span><span class="f2">self</span>.<span class="f1">text</span><span class="f2">inputTextView</span>];
+                <span class="f2">}</span>
+<span class="f2">            }</span>
             self.inputTextView.text = @&quot;&quot;;
             [self _willShowInputTextViewToHeight:[self _getTextViewContentH:self.inputTextView]];
         }
-<span class="f6">@@ -549,6 +567,13 @@</span> - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range r
+<span class="f6">@@ -549,6 +571,11 @@</span> - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range r
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    <span class="f2">//BQMM集成</span>
-<span class="f2">    if (textView.markedTextRange == nil) {</span>
-<span class="f2">        NSRange selectedRange = textView.selectedRange;</span>
-<span class="f2">        textView.mmText = textView.mmText;</span>
-<span class="f2">        textView.selectedRange = selectedRange;</span>
-<span class="f2">    }</span>
+    <span class="f2">[self.inputTextView setContentOffset:CGPointMake(0.0f, (self.inputTextView.contentSize.height - self.inputTextView.frame.size.height) / 2) animated:NO];</span>
+<span class="f2">    [self performSelector:@selector(layoutTextView:) withObject:textView afterDelay:0.1];</span>
+<span class="f2">}</span>
 
+<span class="f2">- (void)layoutTextView:(UITextView *)textView {</span>
     [self _willShowInputTextViewToHeight:[self _getTextViewContentH:textView]];
 }
 
-<span class="f6">@@ -720,19 +745,31 @@</span> - (void)faceButtonAction:(id)sender
+<span class="f6">@@ -720,19 +747,31 @@</span> - (void)faceButtonAction:(id)sender
         item.button.selected = NO;
     }
 
@@ -1652,26 +1760,29 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
         <span class="f2">}</span>
         [<span class="f1">UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations</span><span class="f2">[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput</span>:<span class="f1">^{</span>
 <span class="f1">            self.recordButton.hidden = button.selected</span><span class="f2">_inputTextView]</span>;
-        self<span class="f1">.inputTextView.hidden = !button</span><span class="f2">.faceButton</span>.selected <span class="f2">= YES</span>;
+        self<span class="f1">.inputTextView.hidden = !button</span><span class="f2">.faceButton</span>.selected <span class="f1">;</span>
+<span class="f1">        } completion:^(BOOL finished) {</span>
+<span class="f1">            </span>
+<span class="f1">        }]</span><span class="f2">= YES</span>;
     }
-    <span class="f1">completion:^(BOOL finished)</span><span class="f2">else</span> {
-        <span class="f1">}</span><span class="f2">[[MMEmotionCentre defaultCentre] switchToDefaultKeyboard</span>];
+    else {
+        [<span class="f1">self.inputTextView becomeFirstResponder</span><span class="f2">[MMEmotionCentre defaultCentre] switchToDefaultKeyboard</span>];
     }
 
-<span class="f1">else</span><span class="f2">}</span>
+<span class="f2">}</span>
 
 <span class="f2">//BQMM集成</span>
-<span class="f2">- (void)backToUserInterface</span> {<span class="f1">[</span>
-    self.<span class="f1">inputTextView</span><span class="f2">moreButton.selected = NO;</span>
+<span class="f2">- (void)backToUserInterface {</span>
+<span class="f2">    self.moreButton.selected = NO;</span>
 <span class="f2">    if (!_inputTextView.isFirstResponder) {</span>
-<span class="f2">        [_inputTextView</span> becomeFirstResponder];
-    }
-    <span class="f2">[[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];</span>
+<span class="f2">        [_inputTextView becomeFirstResponder];</span>
+<span class="f2">    }</span>
+<span class="f2">    [[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];</span>
 <span class="f2">    self.faceButton.selected = YES;</span>
 }
 
 - (void)moreButtonAction:(id)sender
-<span class="f6">@@ -842,4 +879,36 @@</span> - (void)willShowBottomView:(UIView *)bottomView
+<span class="f6">@@ -842,4 +881,43 @@</span> - (void)willShowBottomView:(UIView *)bottomView
     [self _willShowBottomView:bottomView];
 }
 
@@ -1695,10 +1806,17 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
 
 <span class="f2">- (void)didSendWithInput:(UIResponder&lt;UITextInput&gt; *)input</span>
 <span class="f2">{</span>
-<span class="f2">    if ([self.delegate respondsToSelector:@selector(didSendText:)]) {</span>
-<span class="f2">        [self.delegate didSendText:_inputTextView.mmText];</span>
-<span class="f2">        self.inputTextView.text = @&quot;&quot;;</span>
-<span class="f2">        [self _willShowInputTextViewToHeight:[self _getTextViewContentH:_inputTextView]];</span>
+<span class="f2">    if ([input isKindOfClass:[UITextView class]]) {</span>
+<span class="f2">        UITextView *textView = (UITextView *)input;</span>
+<span class="f2">        NSString *sendStr = textView.characterMMText;</span>
+<span class="f2">        sendStr = [sendStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];</span>
+<span class="f2">        if (![sendStr isEqualToString:@&quot;&quot;]) {</span>
+<span class="f2">            if ([self.delegate respondsToSelector:@selector(didSendTextMessageWithTextView:)]) {</span>
+<span class="f2">                [self.delegate didSendTextMessageWithTextView:textView];</span>
+<span class="f2">                self.inputTextView.text = @&quot;&quot;;</span>
+<span class="f2">                [self _willShowInputTextViewToHeight:[self _getTextViewContentH:_inputTextView]];</span>
+<span class="f2">            }</span>
+<span class="f2">        }</span>
 <span class="f2">    }</span>
 <span class="f2">}</span>
 
@@ -1722,35 +1840,6 @@ NSString *const EaseMessageCellIdentifierRecvText = @&quot;EaseMessageCellRecvTe
 typedef NS_ENUM(NSUInteger, DXTextViewInputViewType) {
     DXTextViewNormalInputType = 0,
     DXTextViewTextInputType,
-<span class="bold">diff --git a/EaseUI/EMUIKit/Views/conversation/toolbar/EaseTextView.m b/EaseUI/EMUIKit/Views/conversation/toolbar/EaseTextView.m</span>
-<span class="bold">index 9175469..618ed85 100644</span>
-<span class="bold">--- a/EaseUI/EMUIKit/Views/conversation/toolbar/EaseTextView.m</span>
-<span class="bold">+++ b/EaseUI/EMUIKit/Views/conversation/toolbar/EaseTextView.m</span>
-<span class="f6">@@ -82,6 +82,24 @@</span> - (void)setTextAlignment:(NSTextAlignment)textAlignment {
-    [self setNeedsDisplay];
-}
-
-<span class="f2">//BQMM集成</span>
-<span class="f2">- (void)copy:(id)sender</span>
-<span class="f2">{</span>
-<span class="f2">    [UIPasteboard generalPasteboard].string = [self mmTextWithRange:self.selectedRange];</span>
-<span class="f2">}</span>
-
-<span class="f2">- (void)cut:(id)sender</span>
-<span class="f2">{</span>
-<span class="f2">    [UIPasteboard generalPasteboard].string = [self mmTextWithRange:self.selectedRange];</span>
-<span class="f2">    NSRange range  = [self.mmText rangeOfString:[UIPasteboard generalPasteboard].string];</span>
-<span class="f2">    NSString *left = [self.mmText substringToIndex:range.location];</span>
-<span class="f2">    NSString *right = [self.mmText substringFromIndex:range.location + range.length];</span>
-<span class="f2">    NSRange selectedRange = self.selectedRange;</span>
-<span class="f2">    self.mmText = [NSString stringWithFormat:@&quot;%@%@&quot;, left, right];</span>
-<span class="f2">    self.selectedRange = NSMakeRange(selectedRange.location, 0);</span>
-<span class="f2">    [self.delegate textViewDidChange:self];</span>
-<span class="f2">}</span>
-
-#pragma mark - Notifications
-
-- (void)didReceiveTextDidChangeNotification:(NSNotification *)notification {
 </pre>
 </body>
 </html>

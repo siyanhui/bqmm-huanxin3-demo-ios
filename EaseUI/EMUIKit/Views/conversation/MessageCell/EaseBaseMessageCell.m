@@ -18,7 +18,7 @@
 #import "MMTextView.h"
 
 #import <BQMM/BQMM.h>
-#import "MMTextParser+ExtData.h"
+#import "MMTextParser.h"
 
 @interface EaseBaseMessageCell()
 

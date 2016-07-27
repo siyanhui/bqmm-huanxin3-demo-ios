@@ -89,12 +89,12 @@
 		921C6A9B1D2A83AD00D8257F /* RedPacketResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 921C6A8D1D2A83AD00D8257F /* RedPacketResource.bundle */; };
 		921C6A9E1D2A841600D8257F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921C6A9D1D2A841600D8257F /* CoreMotion.framework */; };
 		C035E8151AEA40F400283EE9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C36CA691A1EDB6200CDDD48 /* CoreData.framework */; };
-		CC31BB941D3E22AF006FB288 /* MMTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = CC31BB8C1D3E22AF006FB288 /* MMTextAttachment.m */; };
-		CC31BB951D3E22AF006FB288 /* MMTextParser+ExtData.m in Sources */ = {isa = PBXBuildFile; fileRef = CC31BB8E1D3E22AF006FB288 /* MMTextParser+ExtData.m */; };
-		CC31BB961D3E22AF006FB288 /* MMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC31BB901D3E22AF006FB288 /* MMTextView.m */; };
-		CC31BB971D3E22AF006FB288 /* BQMM.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC31BB921D3E22AF006FB288 /* BQMM.bundle */; };
-		CC31BB981D3E22AF006FB288 /* BQMM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC31BB931D3E22AF006FB288 /* BQMM.framework */; };
+		CC3283221D33994900E7ACA2 /* BQMM.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC3283191D33994900E7ACA2 /* BQMM.bundle */; };
+		CC3283231D33994900E7ACA2 /* BQMM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC32831A1D33994900E7ACA2 /* BQMM.framework */; };
+		CC3283241D33994900E7ACA2 /* MMTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = CC32831D1D33994900E7ACA2 /* MMTextAttachment.m */; };
+		CC3283261D33994900E7ACA2 /* MMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3283211D33994900E7ACA2 /* MMTextView.m */; };
 		CC3283291D33A11F00E7ACA2 /* EMBubbleView+MMText.m in Sources */ = {isa = PBXBuildFile; fileRef = CC3283281D33A11F00E7ACA2 /* EMBubbleView+MMText.m */; };
+		CC337FA31D375A0C002C362C /* MMTextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CC337FA21D375A0C002C362C /* MMTextParser.m */; };
 		CCFB6E381D34D5BB00EEC6B1 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCFB6E371D34D5BB00EEC6B1 /* Bugly.framework */; };
 		CCFB6E3C1D34D60200EEC6B1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3527401931D32C00385240 /* Security.framework */; };
 		D257873C1B43EC7000B0E69F /* RobotListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D257873B1B43EC7000B0E69F /* RobotListViewController.m */; };
@@ -526,16 +526,16 @@
 		921C6A8E1D2A83AD00D8257F /* YZHRedpacketBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZHRedpacketBridge.h; sourceTree = "<group>"; };
 		921C6A8F1D2A83AD00D8257F /* YZHRedpacketBridgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YZHRedpacketBridgeProtocol.h; sourceTree = "<group>"; };
 		921C6A9D1D2A841600D8257F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		CC31BB8B1D3E22AF006FB288 /* MMTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextAttachment.h; sourceTree = "<group>"; };
-		CC31BB8C1D3E22AF006FB288 /* MMTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTextAttachment.m; sourceTree = "<group>"; };
-		CC31BB8D1D3E22AF006FB288 /* MMTextParser+ExtData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMTextParser+ExtData.h"; sourceTree = "<group>"; };
-		CC31BB8E1D3E22AF006FB288 /* MMTextParser+ExtData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MMTextParser+ExtData.m"; sourceTree = "<group>"; };
-		CC31BB8F1D3E22AF006FB288 /* MMTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextView.h; sourceTree = "<group>"; };
-		CC31BB901D3E22AF006FB288 /* MMTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTextView.m; sourceTree = "<group>"; };
-		CC31BB921D3E22AF006FB288 /* BQMM.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BQMM.bundle; sourceTree = "<group>"; };
-		CC31BB931D3E22AF006FB288 /* BQMM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BQMM.framework; sourceTree = "<group>"; };
+		CC3283191D33994900E7ACA2 /* BQMM.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BQMM.bundle; sourceTree = "<group>"; };
+		CC32831A1D33994900E7ACA2 /* BQMM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BQMM.framework; sourceTree = "<group>"; };
+		CC32831C1D33994900E7ACA2 /* MMTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextAttachment.h; sourceTree = "<group>"; };
+		CC32831D1D33994900E7ACA2 /* MMTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTextAttachment.m; sourceTree = "<group>"; };
+		CC3283201D33994900E7ACA2 /* MMTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextView.h; sourceTree = "<group>"; };
+		CC3283211D33994900E7ACA2 /* MMTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTextView.m; sourceTree = "<group>"; };
 		CC3283271D33A11F00E7ACA2 /* EMBubbleView+MMText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMBubbleView+MMText.h"; sourceTree = "<group>"; };
 		CC3283281D33A11F00E7ACA2 /* EMBubbleView+MMText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMBubbleView+MMText.m"; sourceTree = "<group>"; };
+		CC337FA11D375A0C002C362C /* MMTextParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextParser.h; sourceTree = "<group>"; };
+		CC337FA21D375A0C002C362C /* MMTextParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTextParser.m; sourceTree = "<group>"; };
 		CCFB6E371D34D5BB00EEC6B1 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
 		D24A4A9B1BCE4B830007BB00 /* ChatDemo-UI3.0-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ChatDemo-UI3.0-Info.plist"; sourceTree = "<group>"; };
 		D24A4A9C1BCE4B830007BB00 /* ChatDemo-UI3.0-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatDemo-UI3.0-Prefix.pch"; sourceTree = "<group>"; };
@@ -1000,7 +1000,6 @@
 				921C6A911D2A83AD00D8257F /* AlipaySDK.a in Frameworks */,
 				D29A6BB61B7209C8002324BB /* Social.framework in Frameworks */,
 				D29A6BB51B7209C1002324BB /* Accounts.framework in Frameworks */,
-				CC31BB981D3E22AF006FB288 /* BQMM.framework in Frameworks */,
 				C035E8151AEA40F400283EE9 /* CoreData.framework in Frameworks */,
 				EB1975B21ADE0C77002E7E27 /* libc++.dylib in Frameworks */,
 				D2F879231D2E82DF004ED4D4 /* libHyphenateFullSDK.a in Frameworks */,
@@ -1018,6 +1017,7 @@
 				921C6A9A1D2A83AD00D8257F /* libRedpacketLib.a in Frameworks */,
 				90F1BED51930495800121AEC /* MobileCoreServices.framework in Frameworks */,
 				D29A6BB21B72098D002324BB /* Bolts.framework in Frameworks */,
+				CC3283231D33994900E7ACA2 /* BQMM.framework in Frameworks */,
 				90F1BED11930493200121AEC /* libiconv.dylib in Frameworks */,
 				90F1BECF1930492B00121AEC /* AddressBook.framework in Frameworks */,
 				D2F87A561D2E8315004ED4D4 /* libopencore-amrwb.a in Frameworks */,
@@ -1298,8 +1298,8 @@
 		90911056192EEAED008A48AA /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
-				CC31BB891D3E22AF006FB288 /* BMQQ */,
 				CCFB6E361D34D5BB00EEC6B1 /* Bugly */,
+				CC3283171D33994900E7ACA2 /* BQMM_SDK */,
 				D24C39B31B561F3B00F16AA8 /* Parse */,
 				90011F8F1AE4BF090088D549 /* EMAlertView */,
 				9003D9191939D9C300DC38A4 /* UMeng */,
@@ -1490,35 +1490,35 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
-		CC31BB891D3E22AF006FB288 /* BMQQ */ = {
+		CC3283171D33994900E7ACA2 /* BQMM_SDK */ = {
 			isa = PBXGroup;
 			children = (
-				CC31BB8A1D3E22AF006FB288 /* BQMM_EXT */,
-				CC31BB911D3E22AF006FB288 /* BQMM_SDK */,
-			);
-			path = BMQQ;
-			sourceTree = "<group>";
-		};
-		CC31BB8A1D3E22AF006FB288 /* BQMM_EXT */ = {
-			isa = PBXGroup;
-			children = (
-				CC31BB8B1D3E22AF006FB288 /* MMTextAttachment.h */,
-				CC31BB8C1D3E22AF006FB288 /* MMTextAttachment.m */,
-				CC31BB8D1D3E22AF006FB288 /* MMTextParser+ExtData.h */,
-				CC31BB8E1D3E22AF006FB288 /* MMTextParser+ExtData.m */,
-				CC31BB8F1D3E22AF006FB288 /* MMTextView.h */,
-				CC31BB901D3E22AF006FB288 /* MMTextView.m */,
-			);
-			path = BQMM_EXT;
-			sourceTree = "<group>";
-		};
-		CC31BB911D3E22AF006FB288 /* BQMM_SDK */ = {
-			isa = PBXGroup;
-			children = (
-				CC31BB921D3E22AF006FB288 /* BQMM.bundle */,
-				CC31BB931D3E22AF006FB288 /* BQMM.framework */,
+				CC3283181D33994900E7ACA2 /* BQMM */,
+				CC32831B1D33994900E7ACA2 /* BQMM_EXT */,
 			);
 			path = BQMM_SDK;
+			sourceTree = "<group>";
+		};
+		CC3283181D33994900E7ACA2 /* BQMM */ = {
+			isa = PBXGroup;
+			children = (
+				CC3283191D33994900E7ACA2 /* BQMM.bundle */,
+				CC32831A1D33994900E7ACA2 /* BQMM.framework */,
+			);
+			path = BQMM;
+			sourceTree = "<group>";
+		};
+		CC32831B1D33994900E7ACA2 /* BQMM_EXT */ = {
+			isa = PBXGroup;
+			children = (
+				CC32831C1D33994900E7ACA2 /* MMTextAttachment.h */,
+				CC32831D1D33994900E7ACA2 /* MMTextAttachment.m */,
+				CC337FA11D375A0C002C362C /* MMTextParser.h */,
+				CC337FA21D375A0C002C362C /* MMTextParser.m */,
+				CC3283201D33994900E7ACA2 /* MMTextView.h */,
+				CC3283211D33994900E7ACA2 /* MMTextView.m */,
+			);
+			path = BQMM_EXT;
 			sourceTree = "<group>";
 		};
 		CCFB6E361D34D5BB00EEC6B1 /* Bugly */ = {
@@ -2606,7 +2606,7 @@
 				D2B3DAE11BF1D7B700913BD5 /* icon_035_cover.png in Resources */,
 				D2B3DAD21BF1D7B700913BD5 /* icon_019.gif in Resources */,
 				EBD2AB391A7CDAC000D16528 /* call_out.png in Resources */,
-				CC31BB971D3E22AF006FB288 /* BQMM.bundle in Resources */,
+				CC3283221D33994900E7ACA2 /* BQMM.bundle in Resources */,
 				D2B3DADE1BF1D7B700913BD5 /* icon_029.gif in Resources */,
 				EBD2AB991A7CDAC000D16528 /* chat_sender_audio_playing_full@2x.png in Resources */,
 				EBD2ABA61A7CDAC000D16528 /* group_invitee_delete@2x.png in Resources */,
@@ -2683,6 +2683,7 @@
 				D2F87A6C1D2E8315004ED4D4 /* MWCaptionView.m in Sources */,
 				D2F87A7B1D2E8315004ED4D4 /* EMSDWebImagePrefetcher.m in Sources */,
 				D2F87A4F1D2E8315004ED4D4 /* EMCDDeviceManager+ProximitySensor.m in Sources */,
+				CC337FA31D375A0C002C362C /* MMTextParser.m in Sources */,
 				D2F87A861D2E8315004ED4D4 /* PSTCollectionView.m in Sources */,
 				3C914D8419514BBD0002DAD3 /* GroupListViewController.m in Sources */,
 				D2F87ABB1D2E8315004ED4D4 /* EaseFaceView.m in Sources */,
@@ -2691,7 +2692,6 @@
 				905326B519333E8E00F064D7 /* TTGlobalUICommon.m in Sources */,
 				90011F921AE4BF090088D549 /* EMAlertView.m in Sources */,
 				D2F87AA61D2E8315004ED4D4 /* EaseMessageViewController.m in Sources */,
-				CC31BB961D3E22AF006FB288 /* MMTextView.m in Sources */,
 				D2F87AB61D2E8315004ED4D4 /* EaseBubbleView.m in Sources */,
 				90B42A371B65E62C00968342 /* RobotChatViewController.m in Sources */,
 				D2B61E331BC7BEA6007CB53E /* ConversationListController.m in Sources */,
@@ -2704,6 +2704,7 @@
 				D2F87A621D2E8315004ED4D4 /* MJRefreshBackNormalFooter.m in Sources */,
 				D29A6BAC1B72090F002324BB /* UserProfileManager.m in Sources */,
 				D29A6BAF1B720960002324BB /* UserProfileEditViewController.m in Sources */,
+				CC3283241D33994900E7ACA2 /* MMTextAttachment.m in Sources */,
 				D2F87A571D2E8315004ED4D4 /* MBProgressHUD+Add.m in Sources */,
 				D2F87A6D1D2E8315004ED4D4 /* MWGridCell.m in Sources */,
 				D2F87AA91D2E8315004ED4D4 /* EaseViewController.m in Sources */,
@@ -2796,7 +2797,6 @@
 				D2F87AA81D2E8315004ED4D4 /* EaseUsersListViewController.m in Sources */,
 				905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */,
 				D2F87AB71D2E8315004ED4D4 /* EaseChatToolbar.m in Sources */,
-				CC31BB951D3E22AF006FB288 /* MMTextParser+ExtData.m in Sources */,
 				D2F87A4B1D2E8315004ED4D4 /* EMAudioPlayerUtil.m in Sources */,
 				D2F87A761D2E8315004ED4D4 /* EMSDWebImageCompat.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
@@ -2822,12 +2822,12 @@
 				921C6A961D2A83AD00D8257F /* RedpacketMessageCell.m in Sources */,
 				D2F87A831D2E8315004ED4D4 /* UIImageView+EMWebCache.m in Sources */,
 				921C6A991D2A83AD00D8257F /* RedPacketUserConfig.m in Sources */,
-				CC31BB941D3E22AF006FB288 /* MMTextAttachment.m in Sources */,
 				D2BF98B31AEDD780009E0D5C /* EditNicknameViewController.m in Sources */,
 				D2F87A971D2E8315004ED4D4 /* NSDate+Category.m in Sources */,
 				D2F87A6B1D2E8315004ED4D4 /* UIView+MJExtension.m in Sources */,
 				D2F87AAD1D2E8315004ED4D4 /* EaseMessageCell.m in Sources */,
 				D2F87A7C1D2E8315004ED4D4 /* MKAnnotationView+EMWebCache.m in Sources */,
+				CC3283261D33994900E7ACA2 /* MMTextView.m in Sources */,
 				D2F87A9C1D2E8315004ED4D4 /* EaseChineseToPinyin.m in Sources */,
 				D2F87A881D2E8315004ED4D4 /* PSTCollectionViewController.m in Sources */,
 				90911145192EEE6E008A48AA /* MainViewController.m in Sources */,
@@ -2980,7 +2980,6 @@
 					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/Parse",
 					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/BQMM_SDK/BQMM",
 					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/Bugly",
-					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/BMQQ/BQMM_SDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatDemo-UI3.0/ChatDemo-UI3.0-Prefix.pch";
@@ -3037,7 +3036,6 @@
 					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/Parse",
 					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/BQMM_SDK/BQMM",
 					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/Bugly",
-					"$(PROJECT_DIR)/ChatDemo-UI3.0/3rdparty/BMQQ/BQMM_SDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatDemo-UI3.0/ChatDemo-UI3.0-Prefix.pch";

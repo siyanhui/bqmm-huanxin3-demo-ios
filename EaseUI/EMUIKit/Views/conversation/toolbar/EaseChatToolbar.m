@@ -426,7 +426,7 @@
         rect.size.height += changeHeight;
         self.toolbarView.frame = rect;
         
-        [self.inputTextView setContentOffset:CGPointMake(0.0f, (self.inputTextView.contentSize.height - self.inputTextView.frame.size.height) / 2) animated:YES];
+        [self.inputTextView setContentOffset:CGPointMake(0.0f, (self.inputTextView.contentSize.height - self.inputTextView.frame.size.height) / 2) animated:NO];
         _previousTextViewContentHeight = toHeight;
         
         if (_delegate && [_delegate respondsToSelector:@selector(chatToolbarDidChangeFrameToHeight:)]) {
@@ -539,8 +539,12 @@
     if ([text isEqualToString:@"\n"]) {
         if ([self.delegate respondsToSelector:@selector(didSendText:)]) {
             //BQMM集成
-            if ([self.delegate respondsToSelector:@selector(didSendTextMessageWithTextView:)]) {
-                [self.delegate didSendTextMessageWithTextView:self.inputTextView];
+            NSString *sendStr = self.inputTextView.characterMMText;
+            sendStr = [sendStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            if (![sendStr isEqualToString:@""]) {
+                if ([self.delegate respondsToSelector:@selector(didSendTextMessageWithTextView:)]) {
+                    [self.delegate didSendTextMessageWithTextView:self.inputTextView];
+                }
             }
             self.inputTextView.text = @"";
             [self _willShowInputTextViewToHeight:[self _getTextViewContentH:self.inputTextView]];
@@ -567,6 +571,7 @@
 
 - (void)textViewDidChange:(UITextView *)textView
 {
+    [self.inputTextView setContentOffset:CGPointMake(0.0f, (self.inputTextView.contentSize.height - self.inputTextView.frame.size.height) / 2) animated:NO];
     [self performSelector:@selector(layoutTextView:) withObject:textView afterDelay:0.1];
 }
 
@@ -898,7 +903,7 @@
 {
     if ([input isKindOfClass:[UITextView class]]) {
         UITextView *textView = (UITextView *)input;
-        NSString *sendStr = textView.mmText;
+        NSString *sendStr = textView.characterMMText;
         sendStr = [sendStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         if (![sendStr isEqualToString:@""]) {
             if ([self.delegate respondsToSelector:@selector(didSendTextMessageWithTextView:)]) {

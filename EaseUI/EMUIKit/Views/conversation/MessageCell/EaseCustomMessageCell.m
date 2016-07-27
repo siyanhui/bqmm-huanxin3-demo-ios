@@ -75,8 +75,13 @@
         else {
             codes = @[model.text];
         }
+        self.bubbleView.imageView.tag ++;
+        __block NSInteger tag = self.bubbleView.imageView.tag;
         __weak typeof(self) weakSelf = self;
         [[MMEmotionCentre defaultCentre] fetchEmojisByType:MMFetchTypeBig codes:codes completionHandler:^(NSArray *emojis) {
+            if (tag != weakSelf.bubbleView.imageView.tag) {
+                return;
+            }
             if (emojis.count > 0) {
                 MMEmoji *emoji = emojis[0];
                 if ([weakSelf.model.mmExt[@"msg_data"][0][0] isEqualToString:emoji.emojiCode]) {
