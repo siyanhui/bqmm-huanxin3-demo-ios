@@ -752,10 +752,10 @@
     if (button.selected) {
         self.moreButton.selected = NO;
         
+        [[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];
         if (!_inputTextView.isFirstResponder) {
             [_inputTextView becomeFirstResponder];
         }
-        [[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];
         self.faceButton.selected = YES;
     }
     else {
