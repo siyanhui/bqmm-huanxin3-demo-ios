@@ -56,6 +56,7 @@
     self.tableView.tableFooterView = self.footerView;
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    backButton.accessibilityIdentifier = @"back";
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -106,6 +107,7 @@
         [_footerView addSubview:line];
         
         _footerButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 20, _footerView.frame.size.width - 80, 40)];
+        _footerButton.accessibilityIdentifier = @"join";
         [_footerButton setTitle:NSLocalizedString(@"group.join", @"join the group") forState:UIControlStateNormal];
         [_footerButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [_footerButton addTarget:self action:@selector(joinAction) forControlEvents:UIControlEventTouchUpInside];
@@ -185,7 +187,7 @@
 - (BOOL)isJoined:(EMGroup *)group
 {
     if (group) {
-        NSArray *groupList = [[EMClient sharedClient].groupManager getAllGroups];
+        NSArray *groupList = [[EMClient sharedClient].groupManager getJoinedGroups];
         for (EMGroup *tmpGroup in groupList) {
             if (tmpGroup.isPublic == group.isPublic && [group.groupId isEqualToString:tmpGroup.groupId]) {
                 return YES;

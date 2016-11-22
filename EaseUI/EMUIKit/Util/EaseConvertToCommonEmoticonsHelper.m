@@ -17,7 +17,6 @@
 
 #pragma mark - emotics
 
-//BQMM集成   去除环信本身表情映射
 + (NSString *)convertToCommonEmoticons:(NSString *)text
 {
     return text;
@@ -279,7 +278,6 @@
 
 + (NSString *)convertToSystemEmoticons:(NSString *)text
 {
-    return text;
 //    if (![text isKindOfClass:[NSString class]]) {
 //        return @"";
 //    }
@@ -540,8 +538,8 @@
 //                                    options:NSLiteralSearch
 //                                      range:range];
 //    }
-//    
-//    return retText;
+    
+    return text;
 }
 
 @end

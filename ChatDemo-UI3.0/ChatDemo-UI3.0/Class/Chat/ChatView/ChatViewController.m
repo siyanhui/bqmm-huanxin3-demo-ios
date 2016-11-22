@@ -24,6 +24,7 @@
 //BQMM集成
 #import "MMTextParser.h"
 
+
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate, EMChooseViewDelegate>
 {
     UIMenuItem *_copyMenuItem;
@@ -79,7 +80,7 @@
             });
         }
         else {
-            [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:YES];
+            [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId isDeleteMessages:YES completion:nil];
         }
     }
     
@@ -110,6 +111,7 @@
 - (void)_setupBarButtonItem
 {
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    backButton.accessibilityIdentifier = @"back";
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -118,12 +120,14 @@
     //单聊
     if (self.conversation.type == EMConversationTypeChat) {
         UIButton *clearButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+        clearButton.accessibilityIdentifier = @"clear_message";
         [clearButton setImage:[UIImage imageNamed:@"delete"] forState:UIControlStateNormal];
         [clearButton addTarget:self action:@selector(deleteAllMessages:) forControlEvents:UIControlEventTouchUpInside];
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:clearButton];
     }
     else{//群聊
         UIButton *detailButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 44)];
+        detailButton.accessibilityIdentifier = @"detail";
         [detailButton setImage:[UIImage imageNamed:@"group_detail"] forState:UIControlStateNormal];
         [detailButton addTarget:self action:@selector(showGroupDetailAction) forControlEvents:UIControlEventTouchUpInside];
         
@@ -137,7 +141,7 @@
 {
     if (alertView.cancelButtonIndex != buttonIndex) {
         self.messageTimeIntervalTag = -1;
-        [self.conversation deleteAllMessages];
+        [self.conversation deleteAllMessages:nil];
         [self.dataArray removeAllObjects];
         [self.messsagesSource removeAllObjects];
         
@@ -178,7 +182,7 @@
 {
     _selectedCallback = selectedCallback;
     EMGroup *chatGroup = nil;
-    NSArray *groupArray = [[EMClient sharedClient].groupManager getAllGroups];
+    NSArray *groupArray = [[EMClient sharedClient].groupManager getJoinedGroups];
     for (EMGroup *group in groupArray) {
         if ([group.groupId isEqualToString:self.conversation.conversationId]) {
             chatGroup = group;
@@ -317,18 +321,30 @@
     return @{MESSAGE_ATTR_EXPRESSION_ID:easeEmotion.emotionId,MESSAGE_ATTR_IS_BIG_EXPRESSION:@(YES)};
 }
 
+- (void)messageViewControllerMarkAllMessagesAsRead:(EaseMessageViewController *)viewController
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnreadMessageCount" object:nil];
+}
+
 #pragma mark - EaseMob
 
 #pragma mark - EMClientDelegate
 
-- (void)didLoginFromOtherDevice
+- (void)userAccountDidLoginFromOtherDevice
 {
     if ([self.imagePicker.mediaTypes count] > 0 && [[self.imagePicker.mediaTypes objectAtIndex:0] isEqualToString:(NSString *)kUTTypeMovie]) {
         [self.imagePicker stopVideoCapture];
     }
 }
 
-- (void)didRemovedFromServer
+- (void)userAccountDidRemoveFromServer
+{
+    if ([self.imagePicker.mediaTypes count] > 0 && [[self.imagePicker.mediaTypes objectAtIndex:0] isEqualToString:(NSString *)kUTTypeMovie]) {
+        [self.imagePicker stopVideoCapture];
+    }
+}
+
+- (void)userDidForbidByServer
 {
     if ([self.imagePicker.mediaTypes count] > 0 && [[self.imagePicker.mediaTypes objectAtIndex:0] isEqualToString:(NSString *)kUTTypeMovie]) {
         [self.imagePicker stopVideoCapture];
@@ -347,7 +363,7 @@
         //判断当前会话是否为空，若符合则删除该会话
         EMMessage *message = [self.conversation latestMessage];
         if (message == nil) {
-            [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId deleteMessages:NO];
+            [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId isDeleteMessages:NO completion:nil];
         }
     }
     
@@ -380,7 +396,7 @@
         BOOL isDelete = [groupId isEqualToString:self.conversation.conversationId];
         if (self.conversation.type != EMConversationTypeChat && isDelete) {
             self.messageTimeIntervalTag = -1;
-            [self.conversation deleteAllMessages];
+            [self.conversation deleteAllMessages:nil];
             [self.messsagesSource removeAllObjects];
             [self.dataArray removeAllObjects];
             
@@ -432,7 +448,7 @@
         NSMutableIndexSet *indexs = [NSMutableIndexSet indexSetWithIndex:self.menuIndexPath.row];
         NSMutableArray *indexPaths = [NSMutableArray arrayWithObjects:self.menuIndexPath, nil];
         
-        [self.conversation deleteMessageWithId:model.message.messageId];
+        [self.conversation deleteMessageWithId:model.message.messageId error:nil];
         [self.messsagesSource removeObject:model.message];
         
         if (self.menuIndexPath.row - 1 >= 0) {
@@ -473,7 +489,7 @@
     if (object) {
         EMMessage *message = (EMMessage *)object;
         [self addMessageToDataSource:message progress:nil];
-        [[EMClient sharedClient].chatManager importMessages:@[message]];
+        [[EMClient sharedClient].chatManager importMessages:@[message] completion:nil];
     }
 }
 

@@ -25,6 +25,7 @@
 //BQMM集成
 @class MMEmoji;
 
+
 @protocol EMChatToolbarDelegate;
 @interface EaseChatToolbar : UIView
 
@@ -109,6 +110,7 @@
  *  @param ext 扩展消息
  */
 - (void)didSendMMFace:(MMEmoji *)emoji withExt:(NSDictionary*)ext;
+
 
 - (BOOL)didInputAtInLocation:(NSUInteger)location;
 

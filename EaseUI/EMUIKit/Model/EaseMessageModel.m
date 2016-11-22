@@ -118,11 +118,9 @@
             default:
                 break;
         }
-        
         //BQMM集成
         NSDictionary *ext = message.ext;
         self.mmExt = ext;
-
     }
     
     return self;
