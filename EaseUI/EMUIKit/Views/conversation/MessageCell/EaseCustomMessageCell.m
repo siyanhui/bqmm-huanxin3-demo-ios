@@ -15,7 +15,6 @@
 #import "UIImageView+EMWebCache.h"
 #import "UIImage+EMGIF.h"
 #import "IMessageModel.h"
-
 //BQMM集成
 #import <BQMM/BQMM.h>
 #import "EMBubbleView+MMText.h"
@@ -123,6 +122,7 @@
         
         _bubbleView.imageView.image = [UIImage imageNamed:model.failImageName];
     }
+
 }
 
 //BQMM集成
@@ -152,7 +152,6 @@
         NSString *identifier = [EaseBaseMessageCell cellIdentifierWithModel:model];
         return identifier;
     }
-
 }
 
 //BQMM集成

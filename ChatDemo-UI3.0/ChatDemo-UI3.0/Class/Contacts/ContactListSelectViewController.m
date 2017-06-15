@@ -32,6 +32,7 @@
     self.title = NSLocalizedString(@"title.chooseContact", @"select the contact");
     
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 44, 44)];
+    backButton.accessibilityIdentifier = @"back";
     [backButton setImage:[UIImage imageNamed:@"back.png"] forState:UIControlStateNormal];
     [backButton addTarget:self action:@selector(backAction) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
@@ -42,7 +43,6 @@
 - (void)userListViewController:(EaseUsersListViewController *)userListViewController
             didSelectUserModel:(id<IUserModel>)userModel
 {
-    BOOL flag = YES;
     if (self.messageModel) {
         if (self.messageModel.bodyType == EMMessageBodyTypeText) {
             //BQMM集成
@@ -50,10 +50,10 @@
             if (self.messageModel.mmExt[@"txt_msgType"]) {
                 ext = self.messageModel.mmExt;
             }
-            
+
             EMMessage *message = [EaseSDKHelper sendTextMessage:self.messageModel.text to:userModel.buddy messageType:EMChatTypeChat messageExt:self.messageModel.message.ext];
             __weak typeof(self) weakself = self;
-            [[EMClient sharedClient].chatManager asyncSendMessage:message progress:nil completion:^(EMMessage *aMessage, EMError *aError) {
+            [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *aMessage, EMError *aError) {
                 if (!aError) {
                     NSMutableArray *array = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
 #ifdef REDPACKET_AVALABLE
@@ -74,7 +74,6 @@
                 }
             }];
         } else if (self.messageModel.bodyType == EMMessageBodyTypeImage) {
-            flag = NO;
             [self showHudInView:self.view hint:NSLocalizedString(@"transponding", @"transpondFailing...")];
             
             UIImage *image = self.messageModel.image;
@@ -91,7 +90,7 @@
             
             EMMessage *message= [EaseSDKHelper sendImageMessageWithImage:image to:userModel.buddy messageType:EMChatTypeChat messageExt:self.messageModel.message.ext];
             
-            [[EMClient sharedClient].chatManager asyncSendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+            [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
                 if (!error) {
                     NSMutableArray *array = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
 #ifdef REDPACKET_AVALABLE

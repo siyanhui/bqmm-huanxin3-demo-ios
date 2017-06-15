@@ -56,7 +56,6 @@
 @property (strong, nonatomic) NSString *fileURLPath;
 @property (strong, nonatomic) NSString *thumbnailFileURLPath;
 
-
 //BQMM集成
 @property (strong, nonatomic) NSDictionary *mmExt;
 

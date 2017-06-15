@@ -20,14 +20,13 @@
 #import "RedPacketUserConfig.h"
 #import "AlipaySDK.h"
 #import "RedpacketOpenConst.h"
-
+#import <UserNotifications/UserNotifications.h>
 
 //BQMM集成
 #import <BQMM/BQMM.h>
 
-#import <Bugly/Bugly.h>
 
-@interface AppDelegate ()
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
 
 @end
 
@@ -38,6 +37,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    if (NSClassFromString(@"UNUserNotificationCenter")) {
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+    }
+
+
 #ifdef REDPACKET_AVALABLE
     /**
      *  TODO: 通过环信的AppKey注册红包
@@ -45,7 +49,6 @@
     [[RedPacketUserConfig sharedConfig] configWithAppKey:EaseMobAppKey];
 #endif
 
-    
     _connectionState = EMConnectionConnected;
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -65,11 +68,11 @@
     
     //BQMM集成
     // 初始化表情MMSDK
-    [[MMEmotionCentre defaultCentre] setAppId:@"appId"
-                                       secret:@"secret"];
-    
-    //初始化bugly
-    [Bugly startWithAppId:@"900019325"];
+    NSString *appId = @"15e0710942ec49a29d2224a6af4460ee";
+    NSString *secret = @"b11e0936a9d04be19300b1d6eec0ccd5";
+    [[MMEmotionCentre defaultCentre] setAppId:appId
+                                       secret:secret];
+
     
 #warning 初始化环信SDK，详细内容在AppDelegate+EaseMob.m 文件中
 #warning SDK注册 APNS文件的名字, 需要与后台上传证书时的名字一一对应
@@ -102,6 +105,7 @@ didFinishLaunchingWithOptions:launchOptions
     if (_mainController) {
         [_mainController jumpToChatList];
     }
+    [self easemobApplication:application didReceiveRemoteNotification:userInfo];
 }
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
@@ -109,6 +113,20 @@ didFinishLaunchingWithOptions:launchOptions
     if (_mainController) {
         [_mainController didReceiveLocalNotification:notification];
     }
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler
+{
+    NSDictionary *userInfo = notification.request.content.userInfo;
+    [self easemobApplication:[UIApplication sharedApplication] didReceiveRemoteNotification:userInfo];
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler
+{
+    if (_mainController) {
+        [_mainController didReceiveUserNotification:response.notification];
+    }
+    completionHandler();
 }
 
 #ifdef REDPACKET_AVALABLE

@@ -13,12 +13,12 @@
 #import "EaseBaseMessageCell.h"
 
 #import "UIImageView+EMWebCache.h"
-
 //BQMM集成
 #import "MMTextView.h"
 
 #import <BQMM/BQMM.h>
 #import "MMTextParser.h"
+
 
 @interface EaseBaseMessageCell()
 
@@ -100,7 +100,6 @@
                 [self setBubbleWidth:size.width + 25];
                 
             }
-
         }
             break;
         case EMMessageBodyTypeImage:

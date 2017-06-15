@@ -22,7 +22,6 @@
 #import <BQMM/BQMM.h>
 @interface EaseChatToolbar()<UITextViewDelegate, EMFaceDelegate, MMEmotionCentreDelegate>
 
-
 @property (nonatomic) CGFloat version;
 @property (strong, nonatomic) NSMutableArray *leftItems;
 @property (strong, nonatomic) NSMutableArray *rightItems;
@@ -96,8 +95,8 @@
         [self _setupSubviews];
         //BQMM集成
         [MMEmotionCentre defaultCentre].delegate = self;
+
     }
-    
     //BQMM集成
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(backToUserInterface)
@@ -189,7 +188,6 @@
     EaseChatToolbarItem *moreItem = [[EaseChatToolbarItem alloc] initWithButton:self.moreButton withView:self.moreView];
     
     [self setInputViewRightItems:@[faceItem, moreItem]];
-    
     //BQMM集成
     [[MMEmotionCentre defaultCentre] shouldShowShotcutPopoverAboveView:self.faceButton withInput:self.inputTextView];
 
@@ -199,6 +197,7 @@
 {
     //BQMM集成
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
     
     _delegate = nil;
     _inputTextView.delegate = nil;
@@ -427,6 +426,7 @@
         self.toolbarView.frame = rect;
         
         [self.inputTextView setContentOffset:CGPointMake(0.0f, (self.inputTextView.contentSize.height - self.inputTextView.frame.size.height) / 2) animated:NO];
+
         _previousTextViewContentHeight = toHeight;
         
         if (_delegate && [_delegate respondsToSelector:@selector(chatToolbarDidChangeFrameToHeight:)]) {
@@ -546,6 +546,7 @@
                     [self.delegate didSendTextMessageWithTextView:self.inputTextView];
                 }
             }
+
             self.inputTextView.text = @"";
             [self _willShowInputTextViewToHeight:[self _getTextViewContentH:self.inputTextView]];
         }
@@ -576,6 +577,7 @@
 }
 
 - (void)layoutTextView:(UITextView *)textView {
+
     [self _willShowInputTextViewToHeight:[self _getTextViewContentH:textView]];
 }
 
@@ -761,7 +763,7 @@
     else {
         [[MMEmotionCentre defaultCentre] switchToDefaultKeyboard];
     }
-
+    
 }
 
 //BQMM集成
@@ -772,6 +774,7 @@
     }
     [[MMEmotionCentre defaultCentre] attachEmotionKeyboardToInput:_inputTextView];
     self.faceButton.selected = YES;
+
 }
 
 - (void)moreButtonAction:(id)sender
@@ -919,5 +922,6 @@
 {
     self.faceButton.selected = NO;
 }
+
 
 @end

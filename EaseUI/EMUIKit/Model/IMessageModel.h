@@ -56,6 +56,7 @@
 //BQMM集成
 @property (strong, nonatomic) NSDictionary *mmExt;
 
+
 - (instancetype)initWithMessage:(EMMessage *)message;
 
 @end

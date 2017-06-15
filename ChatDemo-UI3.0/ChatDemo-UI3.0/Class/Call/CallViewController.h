@@ -13,8 +13,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 
-#define kLocalCallBitrate @"EaseMobLocalCallBitrate"
-
 @class EMCallSession;
 @interface CallViewController : UIViewController
 {
@@ -37,9 +35,9 @@
     UIButton *_answerButton;
     UIButton *_cancelButton;
     
-    UIButton *_recordButton;
     UIButton *_videoButton;
     UIButton *_voiceButton;
+//    UIButton *_recordButton;
     UIButton *_switchCameraButton;
 }
 
@@ -53,21 +51,20 @@
 
 @property (strong, nonatomic) UIButton *cancelButton;
 
+@property (nonatomic) BOOL isDismissing;
+
 - (instancetype)initWithSession:(EMCallSession *)session
                        isCaller:(BOOL)isCaller
                          status:(NSString *)statusString;
 
 + (BOOL)canVideo;
 
-+ (void)saveBitrate:(NSString*)value;
+- (void)stateToConnected;
 
-- (void)startTimer;
-
-- (void)startShowInfo;
-
-- (void)close;
+- (void)stateToAnswered;
 
 - (void)setNetwork:(EMCallNetworkStatus)status;
 
+- (void)clear;
 
 @end
