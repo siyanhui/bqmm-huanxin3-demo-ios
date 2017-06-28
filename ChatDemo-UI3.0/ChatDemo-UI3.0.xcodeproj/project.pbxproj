@@ -105,6 +105,7 @@
 		CC220AD41DE29A4F00FF46AE /* mm_emoji_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC220AD21DE29A4F00FF46AE /* mm_emoji_loading@2x.png */; };
 		CC220AD51DE29A4F00FF46AE /* mm_emoji_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC220AD31DE29A4F00FF46AE /* mm_emoji_error@2x.png */; };
 		CC220AD81DE2A1C500FF46AE /* EMBubbleView+MMText.m in Sources */ = {isa = PBXBuildFile; fileRef = CC220AD61DE2A1C500FF46AE /* EMBubbleView+MMText.m */; };
+		CCD017ED1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD017EC1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		D2335CA41DD56D7800433DCC /* EaseUI.m in Sources */ = {isa = PBXBuildFile; fileRef = D2335B531DD56D7700433DCC /* EaseUI.m */; };
 		D2335CA51DD56D7800433DCC /* EMAudioPlayerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D2335B5D1DD56D7700433DCC /* EMAudioPlayerUtil.m */; };
 		D2335CA61DD56D7800433DCC /* EMAudioRecorderUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D2335B5F1DD56D7700433DCC /* EMAudioRecorderUtil.m */; };
@@ -570,6 +571,8 @@
 		CC220AD31DE29A4F00FF46AE /* mm_emoji_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mm_emoji_error@2x.png"; sourceTree = "<group>"; };
 		CC220AD61DE2A1C500FF46AE /* EMBubbleView+MMText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMBubbleView+MMText.m"; sourceTree = "<group>"; };
 		CC220AD71DE2A1C500FF46AE /* EMBubbleView+MMText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMBubbleView+MMText.h"; sourceTree = "<group>"; };
+		CCD017EB1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
+		CCD017EC1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		D2335B511DD56D7700433DCC /* EaseUI-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseUI-Prefix.pch"; sourceTree = "<group>"; };
 		D2335B521DD56D7700433DCC /* EaseUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseUI.h; sourceTree = "<group>"; };
 		D2335B531DD56D7700433DCC /* EaseUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseUI.m; sourceTree = "<group>"; };
@@ -1467,6 +1470,8 @@
 		90911056192EEAED008A48AA /* 3rdparty */ = {
 			isa = PBXGroup;
 			children = (
+				CCD017EB1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.h */,
+				CCD017EC1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m */,
 				CC220AC21DE2983B00FF46AE /* BQMM_SDK */,
 				D24C39B31B561F3B00F16AA8 /* Parse */,
 				90011F8F1AE4BF090088D549 /* EMAlertView */,
@@ -2729,6 +2734,7 @@
 				D2335D0B1DD56D7800433DCC /* EaseBubbleView+Image.m in Sources */,
 				D2335D0D1DD56D7800433DCC /* EaseBubbleView+Text.m in Sources */,
 				D2335CB91DD56D7800433DCC /* MJRefreshAutoNormalFooter.m in Sources */,
+				CCD017ED1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m in Sources */,
 				D2335CDB1DD56D7800433DCC /* UIImage+EMWebP.m in Sources */,
 				3A87CD4D1D8FBE2200016402 /* CallResolutionViewController.m in Sources */,
 				D2F7691F1CBF42DB009778FB /* SearchChatViewController.m in Sources */,

@@ -85,7 +85,11 @@
                 MMEmoji *emoji = emojis[0];
                 if ([weakSelf.model.mmExt[@"msg_data"][0][0] isEqualToString:emoji.emojiCode]) {
                     if (emoji.emojiImage) {
-                        weakSelf.bubbleView.imageView.image = emoji.emojiImage;
+//                        weakSelf.bubbleView.imageView.image = emoji.emojiImage;
+                        weakSelf.bubbleView.imageView.animationImages = emoji.emojiImage.images;
+                        weakSelf.bubbleView.imageView.image = emoji.emojiImage.images[0];
+                        weakSelf.bubbleView.imageView.animationDuration = emoji.emojiImage.duration;
+                        [weakSelf.bubbleView.imageView startAnimating];
                     }else{
                         NSLog(@"weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@mm_emoji_error]");
                         weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_error"];
