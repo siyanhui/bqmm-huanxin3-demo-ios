@@ -55,6 +55,10 @@ static const void *textViewKey = &textViewKey;
     self.textView.mmTextColor = [UIColor blackColor];
     self.textView.translatesAutoresizingMaskIntoConstraints = NO;
     self.textView.backgroundColor = [UIColor clearColor];
+    self.textView.editable = false;
+
+    self.textView.selectable = false;
+    self.textView.scrollEnabled = false;
     [self.backgroundImageView addSubview:self.textView];
     
     [self _setupMMTextBubbleConstraints];

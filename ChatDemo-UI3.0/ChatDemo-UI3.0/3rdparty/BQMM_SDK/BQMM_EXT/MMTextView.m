@@ -351,6 +351,7 @@
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)gestureRecognizer {
+    NSLog(@"handle tap");
     if ([gestureRecognizer state] != UIGestureRecognizerStateEnded) {
         return;
     }
