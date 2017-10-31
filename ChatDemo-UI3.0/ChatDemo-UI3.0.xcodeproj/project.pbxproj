@@ -2536,7 +2536,7 @@
 				TargetAttributes = {
 					90911023192EEA70008A48AA = {
 						DevelopmentTeam = HY2JF7VN6E;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -3024,6 +3024,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ChatDemo-UI3.0/ChatDemo-UI3.0.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HY2JF7VN6E;
 				EASEMOB_INC = "";
 				EASEMOB_LIB = "";
@@ -3068,8 +3069,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.siyanhui.hx3demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "ec07af42-812f-4a6f-9adb-8b8277ce2168";
+				PROVISIONING_PROFILE_SPECIFIER = huanxin3;
 				SKIP_INSTALL = NO;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -3088,6 +3089,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ChatDemo-UI3.0/ChatDemo-UI3.0.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = HY2JF7VN6E;
 				EASEMOB_INC = "";
 				EASEMOB_LIB = "";
@@ -3132,7 +3134,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.siyanhui.hx3demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "ec07af42-812f-4a6f-9adb-8b8277ce2168";
+				PROVISIONING_PROFILE_SPECIFIER = huanxin3;
 				SKIP_INSTALL = NO;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
