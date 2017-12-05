@@ -45,6 +45,7 @@
     self.imageView = [[UIImageView alloc] init];
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.imageView.backgroundColor = [UIColor clearColor];
+    self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     [self addSubview:self.imageView];
     self.backgroundImageView.hidden = YES;
     

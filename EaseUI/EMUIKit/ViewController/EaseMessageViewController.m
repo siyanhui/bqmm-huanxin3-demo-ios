@@ -1112,9 +1112,9 @@
             //BQMM集成
         case EMMessageBodyTypeText:
         {
-            if ([model.mmExt[@"txt_msgType"] isEqualToString:@"facetype"]) {
+            if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]) {
                 [self.chatToolbar endEditing:YES];
-                UIViewController *emojiController = [[MMEmotionCentre defaultCentre] controllerForEmotionCode:model.mmExt[@"msg_data"][0][0]];
+                UIViewController *emojiController = [[MMEmotionCentre defaultCentre] controllerForEmotionCode:model.mmExt[TEXT_MESG_DATA][0][0]];
                 [self.navigationController pushViewController:emojiController animated:YES];
             }
         }
@@ -1236,8 +1236,8 @@
         }
     }
     NSArray *textImgArray = textView.textImgArray;
-    NSDictionary *mmExt = @{@"txt_msgType":@"emojitype",
-                            @"msg_data":[MMTextParser extDataWithTextImageArray:textImgArray]};;
+    NSDictionary *mmExt = @{TEXT_MESG_TYPE:TEXT_MESG_EMOJI_TYPE,
+                            TEXT_MESG_DATA:[MMTextParser extDataWithTextImageArray:textImgArray]};;
     [ext addEntriesFromDictionary:mmExt];
     [self sendTextMessage:sendStr withExt:ext];
 }
@@ -1321,6 +1321,10 @@
 }
 
 //BQMM集成
+- (void)didSendMMWebSticker:(MMWebSticker *)webSticker {
+    [self sendWebStickerMessage:webSticker];
+}
+
 - (void)didSendMMFace:(MMEmoji *)emoji
 {
     [self sendMMFaceMessage:emoji];
@@ -1628,8 +1632,8 @@
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     if (self.menuIndexPath && self.menuIndexPath.row > 0) {
         id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
-        if ([model.mmExt[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-            pasteboard.string = [MMTextParser stringWithExtData:model.mmExt[@"msg_data"]];
+        if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_EMOJI_TYPE]) {
+            pasteboard.string = [MMTextParser stringWithExtData:model.mmExt[TEXT_MESG_DATA]];
         }
         else {
             pasteboard.string = model.text;
@@ -1818,10 +1822,23 @@
 }
 
 //BQMM集成
+-(void)sendWebStickerMessage:(MMWebSticker *)webSticker {
+    NSString *sendStr = [@"[" stringByAppendingFormat:@"%@]", webSticker.text];
+    NSDictionary *msgData = @{WEBSTICKER_URL: webSticker.mainImage, WEBSTICKER_IS_GIF: (webSticker.isAnimated ? @"1" : @"0"), WEBSTICKER_ID: webSticker.imageId,WEBSTICKER_WIDTH: @((float)webSticker.size.width), WEBSTICKER_HEIGHT: @((float)webSticker.size.height)};
+    NSDictionary *extDic = @{TEXT_MESG_TYPE:TEXT_MESG_WEB_TYPE,
+                             TEXT_MESG_DATA:msgData
+                             };
+    EMMessage *message = [EaseSDKHelper sendTextMessage:sendStr
+                                                     to:self.conversation.conversationId
+                                            messageType:[self _messageTypeFromConversationType]
+                                             messageExt:extDic];
+    [self _sendMessage:message];
+}
+
 -(void)sendMMFaceMessage:(MMEmoji *)emoji
 {
-    NSDictionary *mmExt = @{@"txt_msgType":@"facetype",
-                            @"msg_data":[MMTextParser extDataWithEmoji:emoji]};
+    NSDictionary *mmExt = @{TEXT_MESG_TYPE:TEXT_MESG_FACE_TYPE,
+                            TEXT_MESG_DATA:[MMTextParser extDataWithEmoji:emoji]};
     [self sendMMFaceMessage:emoji withExt:mmExt];
 }
 

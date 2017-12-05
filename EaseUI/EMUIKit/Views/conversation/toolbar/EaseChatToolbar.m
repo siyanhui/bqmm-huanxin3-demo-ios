@@ -887,6 +887,12 @@
 //BQMM集成
 //表情MM代理
 #pragma mark - *MMEmotionCentreDelegate
+- (void)didSelectWebSticker:(nonnull MMWebSticker *)webSticker {
+    if ([self.delegate respondsToSelector:@selector(didSendMMWebSticker:)]) {
+        [self.delegate didSendMMWebSticker:webSticker];
+    }
+}
+
 - (void)didSelectEmoji:(MMEmoji *)emoji
 {
     if ([self.delegate respondsToSelector:@selector(didSendMMFace:)]) {

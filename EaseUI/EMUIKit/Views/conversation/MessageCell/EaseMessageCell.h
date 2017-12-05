@@ -69,6 +69,7 @@ typedef enum{
 
 //BQMM集成
 @property (nonatomic) CGFloat bubbleWidth UI_APPEARANCE_SELECTOR; //default 200;
+@property (nonatomic) CGSize webStickerSize;
 
 
 @property (nonatomic) UIEdgeInsets bubbleMargin UI_APPEARANCE_SELECTOR; //default UIEdgeInsetsMake(8, 0, 8, 0);

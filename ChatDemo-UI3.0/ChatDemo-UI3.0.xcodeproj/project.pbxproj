@@ -98,13 +98,13 @@
 		921C6A9E1D2A841600D8257F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921C6A9D1D2A841600D8257F /* CoreMotion.framework */; };
 		C035E8151AEA40F400283EE9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C36CA691A1EDB6200CDDD48 /* CoreData.framework */; };
 		CC220ACD1DE2983B00FF46AE /* BQMM.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CC220AC41DE2983B00FF46AE /* BQMM.bundle */; };
-		CC220ACE1DE2983B00FF46AE /* BQMM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC220AC51DE2983B00FF46AE /* BQMM.framework */; };
 		CC220ACF1DE2983B00FF46AE /* MMTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = CC220AC81DE2983B00FF46AE /* MMTextAttachment.m */; };
 		CC220AD01DE2983B00FF46AE /* MMTextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = CC220ACA1DE2983B00FF46AE /* MMTextParser.m */; };
 		CC220AD11DE2983B00FF46AE /* MMTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CC220ACC1DE2983B00FF46AE /* MMTextView.m */; };
 		CC220AD41DE29A4F00FF46AE /* mm_emoji_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC220AD21DE29A4F00FF46AE /* mm_emoji_loading@2x.png */; };
 		CC220AD51DE29A4F00FF46AE /* mm_emoji_error@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC220AD31DE29A4F00FF46AE /* mm_emoji_error@2x.png */; };
 		CC220AD81DE2A1C500FF46AE /* EMBubbleView+MMText.m in Sources */ = {isa = PBXBuildFile; fileRef = CC220AD61DE2A1C500FF46AE /* EMBubbleView+MMText.m */; };
+		CC83503D1FC6CCA500FF759F /* BQMM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC83503C1FC6CCA500FF759F /* BQMM.framework */; };
 		CCD017ED1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m in Sources */ = {isa = PBXBuildFile; fileRef = CCD017EC1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m */; };
 		D2335CA41DD56D7800433DCC /* EaseUI.m in Sources */ = {isa = PBXBuildFile; fileRef = D2335B531DD56D7700433DCC /* EaseUI.m */; };
 		D2335CA51DD56D7800433DCC /* EMAudioPlayerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = D2335B5D1DD56D7700433DCC /* EMAudioPlayerUtil.m */; };
@@ -560,7 +560,6 @@
 		90F1BED41930495800121AEC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		921C6A9D1D2A841600D8257F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		CC220AC41DE2983B00FF46AE /* BQMM.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BQMM.bundle; sourceTree = "<group>"; };
-		CC220AC51DE2983B00FF46AE /* BQMM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BQMM.framework; sourceTree = "<group>"; };
 		CC220AC71DE2983B00FF46AE /* MMTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextAttachment.h; sourceTree = "<group>"; };
 		CC220AC81DE2983B00FF46AE /* MMTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTextAttachment.m; sourceTree = "<group>"; };
 		CC220AC91DE2983B00FF46AE /* MMTextParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTextParser.h; sourceTree = "<group>"; };
@@ -571,6 +570,7 @@
 		CC220AD31DE29A4F00FF46AE /* mm_emoji_error@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mm_emoji_error@2x.png"; sourceTree = "<group>"; };
 		CC220AD61DE2A1C500FF46AE /* EMBubbleView+MMText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EMBubbleView+MMText.m"; sourceTree = "<group>"; };
 		CC220AD71DE2A1C500FF46AE /* EMBubbleView+MMText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EMBubbleView+MMText.h"; sourceTree = "<group>"; };
+		CC83503C1FC6CCA500FF759F /* BQMM.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BQMM.framework; sourceTree = "<group>"; };
 		CCD017EB1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+FDFullscreenPopGesture.h"; sourceTree = "<group>"; };
 		CCD017EC1F03B8AF0047D9C2 /* UINavigationController+FDFullscreenPopGesture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+FDFullscreenPopGesture.m"; sourceTree = "<group>"; };
 		D2335B511DD56D7700433DCC /* EaseUI-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseUI-Prefix.pch"; sourceTree = "<group>"; };
@@ -1055,7 +1055,7 @@
 				90F1BED51930495800121AEC /* MobileCoreServices.framework in Frameworks */,
 				D2335CB01DD56D7800433DCC /* libopencore-amrwb.a in Frameworks */,
 				D29A6BB21B72098D002324BB /* Bolts.framework in Frameworks */,
-				CC220ACE1DE2983B00FF46AE /* BQMM.framework in Frameworks */,
+				CC83503D1FC6CCA500FF759F /* BQMM.framework in Frameworks */,
 				90F1BED11930493200121AEC /* libiconv.dylib in Frameworks */,
 				90F1BECF1930492B00121AEC /* AddressBook.framework in Frameworks */,
 				90F1BECD1930492300121AEC /* CFNetwork.framework in Frameworks */,
@@ -1573,8 +1573,8 @@
 		CC220AC31DE2983B00FF46AE /* BQMM */ = {
 			isa = PBXGroup;
 			children = (
+				CC83503C1FC6CCA500FF759F /* BQMM.framework */,
 				CC220AC41DE2983B00FF46AE /* BQMM.bundle */,
-				CC220AC51DE2983B00FF46AE /* BQMM.framework */,
 			);
 			path = BQMM;
 			sourceTree = "<group>";

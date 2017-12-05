@@ -47,7 +47,7 @@
         if (self.messageModel.bodyType == EMMessageBodyTypeText) {
             //BQMM集成
             NSDictionary *ext = nil;
-            if (self.messageModel.mmExt[@"txt_msgType"]) {
+            if (self.messageModel.mmExt[TEXT_MESG_TYPE]) {
                 ext = self.messageModel.mmExt;
             }
 

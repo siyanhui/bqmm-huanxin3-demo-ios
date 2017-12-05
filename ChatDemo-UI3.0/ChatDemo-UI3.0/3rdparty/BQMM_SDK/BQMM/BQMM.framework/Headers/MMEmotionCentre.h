@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MMTheme.h"
 #import "MMEmoji.h"
+#import "MMWebSticker.h"
 /**
  sdk region
  */
@@ -49,6 +50,10 @@ typedef enum
 @protocol MMEmotionCentreDelegate <NSObject>
 
 @optional
+
+/**
+ */
+- (void)didSelectWebSticker:(nonnull MMWebSticker *)webSticker;
 
 /**
  *  the delegate method handles the selection of big emoji in the keyboard
