@@ -96,7 +96,7 @@
 - (void)didSendText:(NSString *)text withExt:(NSDictionary*)ext;
 
 //BQMM集成
-- (void)didSendMMWebSticker:(MMWebSticker *)webSticker;
+- (void)didClickGifTap;
 /**
  *  发送表情MM大表情
  *

@@ -189,7 +189,7 @@
     
     [self setInputViewRightItems:@[faceItem, moreItem]];
     //BQMM集成
-    [[MMEmotionCentre defaultCentre] shouldShowShotcutPopoverAboveView:self.faceButton withInput:self.inputTextView];
+//    [[MMEmotionCentre defaultCentre] shouldShowShotcutPopoverAboveView:self.faceButton withInput:self.inputTextView];
 
 }
 
@@ -887,9 +887,9 @@
 //BQMM集成
 //表情MM代理
 #pragma mark - *MMEmotionCentreDelegate
-- (void)didSelectWebSticker:(nonnull MMWebSticker *)webSticker {
-    if ([self.delegate respondsToSelector:@selector(didSendMMWebSticker:)]) {
-        [self.delegate didSendMMWebSticker:webSticker];
+- (void)didClickGifTap {
+    if ([self.delegate respondsToSelector:@selector(didClickGifTap)]) {
+        [self.delegate didClickGifTap];
     }
 }
 

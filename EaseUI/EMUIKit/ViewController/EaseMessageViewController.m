@@ -30,6 +30,7 @@
 //BQMM集成
 #import <BQMM/BQMM.h>
 #import "MMTextParser.h"
+#import "MMGifManager.h"
 
 
 #define KHintAdjustY    50
@@ -146,6 +147,12 @@
     [[EaseChatBarMoreView appearance] setMoreViewBackgroundColor:[UIColor colorWithRed:240 / 255.0 green:242 / 255.0 blue:247 / 255.0 alpha:1.0]];
     
     [self tableViewDidTriggerHeaderRefresh];
+    
+    [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
+    [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];
+    [MMGifManager defaultManager].selectedHandler = ^(MMGif * _Nullable gif) {
+        [self didSendGifMessage:gif];
+    };
 }
 
 - (void)setupEmotion
@@ -1321,8 +1328,25 @@
 }
 
 //BQMM集成
-- (void)didSendMMWebSticker:(MMWebSticker *)webSticker {
-    [self sendWebStickerMessage:webSticker];
+- (void)didClickGifTap {
+    //点击gif tab 后应该保证搜索模式是打开的 搜索UI是允许显示的
+    [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
+    [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];
+    [[MMGifManager defaultManager] showTrending];
+}
+
+-(void)didSendGifMessage:(MMGif *)gif {
+    NSString *sendStr = [@"[" stringByAppendingFormat:@"%@]", gif.text];
+    NSDictionary *msgData = @{WEBSTICKER_URL: gif.mainImage, WEBSTICKER_IS_GIF: (gif.isAnimated ? @"1" : @"0"), WEBSTICKER_ID: gif.imageId,WEBSTICKER_WIDTH: @((float)gif.size.width), WEBSTICKER_HEIGHT: @((float)gif.size.height)};
+    NSDictionary *extDic = @{TEXT_MESG_TYPE:TEXT_MESG_WEB_TYPE,
+                             TEXT_MESG_DATA:msgData
+                             };
+    
+    EMMessage *message = [EaseSDKHelper sendTextMessage:sendStr
+                                                     to:self.conversation.conversationId
+                                            messageType:[self _messageTypeFromConversationType]
+                                             messageExt:extDic];
+    [self _sendMessage:message];
 }
 
 - (void)didSendMMFace:(MMEmoji *)emoji
@@ -1818,20 +1842,6 @@
                                                    to:self.conversation.conversationId
                                           messageType:[self _messageTypeFromConversationType]
                                            messageExt:ext];
-    [self _sendMessage:message];
-}
-
-//BQMM集成
--(void)sendWebStickerMessage:(MMWebSticker *)webSticker {
-    NSString *sendStr = [@"[" stringByAppendingFormat:@"%@]", webSticker.text];
-    NSDictionary *msgData = @{WEBSTICKER_URL: webSticker.mainImage, WEBSTICKER_IS_GIF: (webSticker.isAnimated ? @"1" : @"0"), WEBSTICKER_ID: webSticker.imageId,WEBSTICKER_WIDTH: @((float)webSticker.size.width), WEBSTICKER_HEIGHT: @((float)webSticker.size.height)};
-    NSDictionary *extDic = @{TEXT_MESG_TYPE:TEXT_MESG_WEB_TYPE,
-                             TEXT_MESG_DATA:msgData
-                             };
-    EMMessage *message = [EaseSDKHelper sendTextMessage:sendStr
-                                                     to:self.conversation.conversationId
-                                            messageType:[self _messageTypeFromConversationType]
-                                             messageExt:extDic];
     [self _sendMessage:message];
 }
 

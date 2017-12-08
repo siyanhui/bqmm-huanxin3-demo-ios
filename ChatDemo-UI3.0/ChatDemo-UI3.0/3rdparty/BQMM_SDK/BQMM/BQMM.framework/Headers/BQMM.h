@@ -15,7 +15,7 @@
 #import "MMEmotionCentre.h"
 #import "MMTheme.h"
 #import "MMEmoji.h"
-#import "MMWebSticker.h"
+#import "MMGif.h"
 #import "UITextView+BQMM.h"
 
 
