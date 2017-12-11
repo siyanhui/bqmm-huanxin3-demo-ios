@@ -13,6 +13,7 @@
 #import "EaseCustomMessageCell.h"
 #import "EaseBubbleView+Gif.h"
 #import "UIImageView+EMWebCache.h"
+#import "UIImageView+WebCache.h"
 #import "UIImage+EMGIF.h"
 #import "IMessageModel.h"
 //BQMM集成
@@ -117,7 +118,7 @@
         NSURL *url = [[NSURL alloc] initWithString:webStickerUrl];
         if (url != nil) {
             __weak typeof(self) weakSelf = self;
-            [self.bubbleView.imageView sd_setImageWithURL:url completed:^(UIImage *image, NSError *error, EMSDImageCacheType cacheType, NSURL *imageURL) {
+            [self.bubbleView.imageView sd_setImageWithURL:url placeholderImage:nil options:SDWebImageAvoidAutoSetImage completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
                 if(error == nil && image) {
                     if (image.images.count > 1) {
                         weakSelf.bubbleView.imageView.animationImages = image.images;

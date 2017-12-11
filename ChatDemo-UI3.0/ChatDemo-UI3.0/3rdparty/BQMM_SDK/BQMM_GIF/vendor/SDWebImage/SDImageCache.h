@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "SDWebImageCompat.h"
-#import "SDImageCacheConfig.h"
+
+@class SDImageCacheConfig;
 
 typedef NS_ENUM(NSInteger, SDImageCacheType) {
     /**

@@ -54,7 +54,7 @@
     NSURL *url = [self getWEbStickerThumbUrl:_picture];
     if (url != nil) {
         __weak typeof(self) weakSelf = self;
-        [self.emojiImageView sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+        [self.emojiImageView sd_setImageWithURL:url placeholderImage:nil options:SDWebImageAvoidAutoSetImage completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             if(error == nil) {
                 [weakSelf.loadingIndicator stopAnimating];
                 if (image.images.count > 0) {
