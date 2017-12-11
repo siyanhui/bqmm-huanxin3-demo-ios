@@ -148,6 +148,7 @@
     
     [self tableViewDidTriggerHeaderRefresh];
     
+    //BQMM集成   设置gif搜索相关
     [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
     [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];
     [MMGifManager defaultManager].selectedHandler = ^(MMGif * _Nullable gif) {
@@ -845,7 +846,7 @@
                     
                     [strongSelf.tableView reloadData];
                     
-                    [strongSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.dataArray count] - scrollToIndex - 1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                    [strongSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.dataArray count] - scrollToIndex - 1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
                 }
             });
             
@@ -1023,6 +1024,10 @@
         
         return [EaseBaseMessageCell cellHeightWithModel:model];
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return [self tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 #pragma mark - UIImagePickerControllerDelegate
@@ -1328,7 +1333,7 @@
 }
 
 //BQMM集成
-- (void)didClickGifTap {
+- (void)didClickGifTab {
     //点击gif tab 后应该保证搜索模式是打开的 搜索UI是允许显示的
     [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
     [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];

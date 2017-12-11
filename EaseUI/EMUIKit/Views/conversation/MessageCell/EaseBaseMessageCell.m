@@ -100,7 +100,7 @@
                 [self setBubbleWidth:size.width + 25];
                 
             }else if ([self.model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]){
-                [self setBubbleWidth:self.model.webStickerSize.width];
+                [self setBubbleWidth:self.model.gifSize.width];
             }
         }
             break;

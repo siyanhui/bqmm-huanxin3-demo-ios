@@ -887,9 +887,9 @@
 //BQMM集成
 //表情MM代理
 #pragma mark - *MMEmotionCentreDelegate
-- (void)didClickGifTap {
-    if ([self.delegate respondsToSelector:@selector(didClickGifTap)]) {
-        [self.delegate didClickGifTap];
+- (void)didClickGifTab {
+    if ([self.delegate respondsToSelector:@selector(didClickGifTab)]) {
+        [self.delegate didClickGifTab];
     }
 }
 

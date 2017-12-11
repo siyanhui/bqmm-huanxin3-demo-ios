@@ -53,7 +53,7 @@ typedef enum
 /**
  *  the delegate method handles the tap of gif
  */
-- (void)didClickGifTap;
+- (void)didClickGifTab;
 
 @optional
 
@@ -192,7 +192,8 @@ typedef enum
  *  @param input       input control
  */
 - (void)shouldShowShotcutPopoverAboveView:(nonnull UIView *)attchedView
-                                withInput:(nonnull UIResponder<UITextInput> *)input;
+                                withInput:(nonnull UIResponder<UITextInput> *)input
+                                __attribute__((deprecated("no longer support")));
 
 
 /**

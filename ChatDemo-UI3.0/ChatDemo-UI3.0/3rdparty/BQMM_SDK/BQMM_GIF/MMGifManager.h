@@ -15,8 +15,8 @@ typedef NS_OPTIONS (NSInteger, MMSearchModeStatus) {
     MMSearchModeStatusInputTextChange = 1 << 3,      //输入框内容变化
     MMSearchModeStatusGifMessageSent = 1 << 4,       //发送了gif消息
     MMSearchModeStatusShowTrendingTriggered = 1 << 5,//触发流行表情
-    MMSearchModeStatusGifsDataReceived = 1 << 6,     //收到gif数据
-    MMSearchModeStatusSearchResultEmpty = 1 << 7,     //搜索结果为空
+    MMSearchModeStatusGifsDataReceivedWithResult = 1 << 6,     //收到gif数据
+    MMSearchModeStatusGifsDataReceivedWithEmptyResult = 1 << 7,     //搜索结果为空
 };
 
 typedef void (^MMGifSelectedHandler)(MMGif * _Nullable gif); //搜索表情点击的handler

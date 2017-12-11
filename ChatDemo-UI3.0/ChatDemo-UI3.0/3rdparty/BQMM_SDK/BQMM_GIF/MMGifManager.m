@@ -17,19 +17,8 @@
 #define MMEmojiMargin 10
 #define MMTIPDuration 5.0
 
-@interface MMGifManager ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate> {
-    BOOL searchModeEnabled;
-    BOOL searchUiVisible;
-    
-    NSMutableArray<MMGif *> *gifsArray;
-    int currentPage;
-    int pageSize;
-    NSString *currentKey;
-    BOOL showingTrending;
-    BOOL loadingMore;
-    BOOL loadingFinished;
-}
-@property (nonatomic, strong) NSTimer *timer;
+@interface MMGifManager ()<UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+//@property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) DXPopover *popover;
 @property (nonatomic, weak) UIView *attchedView;
 @property (nonatomic, weak) UIResponder<UITextInput> *inputView;
@@ -39,6 +28,17 @@
 @property(strong, nonatomic) UIButton *reloadButton;
 @property(strong, nonatomic) UILabel *emptyLabel;
 @property(strong, nonatomic) UIActivityIndicatorView *loadingIndicator;
+
+
+@property (nonatomic) BOOL searchModeEnabled;
+@property (nonatomic) BOOL searchUiVisible;
+@property(strong, nonatomic) NSMutableArray<MMGif *> *gifsArray;
+@property (nonatomic) int currentPage;
+@property (nonatomic) int pageSize;
+@property(strong, nonatomic) NSString *currentKey;
+@property (nonatomic) BOOL showingTrending;
+@property (nonatomic) BOOL loadingMore;
+@property (nonatomic) BOOL loadingFinished;
 
 @end
 static MMGifManager *_defaultManager = nil;
@@ -54,8 +54,8 @@ static MMGifManager *_defaultManager = nil;
 - (instancetype)init
 {
     self = [super init];
-    gifsArray = [[NSMutableArray alloc] initWithCapacity:0];
-    pageSize = 20;
+    self.gifsArray = [[NSMutableArray alloc] initWithCapacity:0];
+    self.pageSize = 20;
     return self;
 }
 
@@ -96,10 +96,9 @@ static MMGifManager *_defaultManager = nil;
         _contentView.frame = CGRectMake(0, 0, screenWith, MMTIPHEIGHT + 8);
         [self initContentViewAssistView];
         [_contentView addSubview:[self collectionView]];
+        self.collectionView.frame = CGRectMake(8, 8, _contentView.frame.size.width - 16, _contentView.frame.size.height - 16);
+        [self.collectionView reloadData];
     }
-    
-    self.collectionView.frame = CGRectMake(8, 8, _contentView.frame.size.width - 16, _contentView.frame.size.height - 16);
-    [self.collectionView reloadData];
     return _contentView;
 }
 
@@ -128,7 +127,7 @@ static MMGifManager *_defaultManager = nil;
     [_reloadButton setTitle:@"重新加载" forState:UIControlStateNormal];
     [_reloadButton setTitleColor:[UIColor colorWithWhite:100.0 / 255 alpha:1.0] forState:UIControlStateNormal];
     _reloadButton.contentEdgeInsets = UIEdgeInsetsMake(8, 12, 8, 12);
-//    [_reloadButton addTarget:self action:@selector(reloadFailData) forControlEvents:UIControlEventTouchUpInside];
+    //    [_reloadButton addTarget:self action:@selector(reloadFailData) forControlEvents:UIControlEventTouchUpInside];
     _reloadButton.layer.cornerRadius = 2;
     _reloadButton.layer.borderWidth = 1;
     _reloadButton.layer.borderColor = [UIColor colorWithWhite:225.0 / 255 alpha:1.0].CGColor;
@@ -171,7 +170,7 @@ static MMGifManager *_defaultManager = nil;
         currentText = [currentText stringByTrimmingCharactersInSet:[NSMutableCharacterSet whitespaceAndNewlineCharacterSet]];
         
         //跟当前key比较
-        if (currentText == currentKey) {
+        if (currentText == self.currentKey) {
             return;
         }
         
@@ -182,7 +181,7 @@ static MMGifManager *_defaultManager = nil;
         }
         
         if ([currentText length] >= 5) {
-            currentKey = currentText;
+            self.currentKey = currentText;
             return;
         }
         
@@ -198,12 +197,12 @@ static MMGifManager *_defaultManager = nil;
 #pragma mark -- scrollview
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == _collectionView) {
-        [_timer invalidate];
-        if (!loadingMore) {
+        //        [_timer invalidate];
+        if (!self.loadingMore) {
             CGPoint offSet = _collectionView.contentOffset;
             CGFloat width = [UIScreen mainScreen].bounds.size.width;
             if (offSet.x + width  > _collectionView.contentSize.width + 30) {
-                loadingMore = true;
+                self.loadingMore = true;
                 [self loadNextPage];
             }
         }
@@ -212,69 +211,69 @@ static MMGifManager *_defaultManager = nil;
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if(!decelerate) {
-        _timer = [NSTimer scheduledTimerWithTimeInterval:MMTIPDuration
-                                                  target:self
-                                                selector:@selector(dismissWebPic)
-                                                userInfo:nil
-                                                 repeats:NO];
+        //        _timer = [NSTimer scheduledTimerWithTimeInterval:MMTIPDuration
+        //                                                  target:self
+        //                                                selector:@selector(dismissWebPic)
+        //                                                userInfo:nil
+        //                                                 repeats:NO];
     }
     
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:MMTIPDuration
-                                              target:self
-                                            selector:@selector(dismissWebPic)
-                                            userInfo:nil
-                                             repeats:NO];
+    //    _timer = [NSTimer scheduledTimerWithTimeInterval:MMTIPDuration
+    //                                              target:self
+    //                                            selector:@selector(dismissWebPic)
+    //                                            userInfo:nil
+    //                                             repeats:NO];
 }
 
 - (void)searchEmojisWith:(NSString *)key {
-    currentKey = key;
-    currentPage = 1;
+    self.currentKey = key;
+    self.currentPage = 1;
     
-    showingTrending = false;
-    loadingMore = false;
-    loadingFinished = false;
-
+    self.showingTrending = false;
+    self.loadingMore = false;
+    self.loadingFinished = false;
     
-    [gifsArray removeAllObjects];
+    
+    [self.gifsArray removeAllObjects];
     _emptyLabel.hidden = true;
     _loadingIndicator.hidden = false;
     
     [_contentView bringSubviewToFront:_loadingView];
     [_loadingIndicator startAnimating];
-    [self getSearchGifsAtPage:currentPage];
+    [self getSearchGifsAtPage:self.currentPage];
 }
 
 - (void)loadNextPage {
-    if (loadingFinished) {
+    if (self.loadingFinished) {
         return;
     }
-    currentPage = currentPage + 1;
-    if (showingTrending) {
-        [self getTrendingGifsAtPage:currentPage];
+    self.currentPage = self.currentPage + 1;
+    if (self.showingTrending) {
+        [self getTrendingGifsAtPage:self.currentPage];
     }else{
-        
+        [self getSearchGifsAtPage:self.currentPage];
     }
 }
 
 #pragma mark - CollctionView Datasource/delegate
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return gifsArray.count;
+    return self.gifsArray.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MMGifCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([MMGifCell class]) forIndexPath:indexPath];
-    if (indexPath.row < gifsArray.count) {
-        MMGif *gif = gifsArray[indexPath.row];
+    if (indexPath.row < self.gifsArray.count) {
+        MMGif *gif = self.gifsArray[indexPath.row];
         [cell setData:gif];
     }
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < gifsArray.count) {
+    if (indexPath.row < self.gifsArray.count) {
         MMGifCell *cell = (MMGifCell *)[collectionView cellForItemAtIndexPath:indexPath];
         if (cell.emojiImageView.userInteractionEnabled) {
             return;
@@ -292,7 +291,7 @@ static MMGifManager *_defaultManager = nil;
     if (status & MMSearchModeStatusShowTrendingTriggered) {
         [self showWebStickers];
     }else{
-        if (searchModeEnabled && searchUiVisible) {
+        if (self.searchModeEnabled && self.searchUiVisible) {
             if (status & MMSearchModeStatusKeyboardHide) {
                 [self dismissWebPic];
                 return;
@@ -303,34 +302,32 @@ static MMGifManager *_defaultManager = nil;
                 return;
             }
             
-            
-            if (status & MMSearchModeStatusSearchResultEmpty) {
-//                [self dismissWebPic];
-                [self showWebStickers];
-                return;
-            }
-            
             if (status & MMSearchModeStatusInputEndEditing) {
                 [self dismissWebPic];
                 return;
             }
             
-            if (status & MMSearchModeStatusGifsDataReceived) {
+            if (status & MMSearchModeStatusGifsDataReceivedWithResult) {
+                [self showWebStickers];
+                return;
+            }
+            
+            if (status & MMSearchModeStatusGifsDataReceivedWithEmptyResult) {
                 [self showWebStickers];
                 return;
             }
             
             if (status & MMSearchModeStatusInputBecomeEmpty) {
                 [self dismissWebPic];
-                searchModeEnabled = NO;
-                searchUiVisible = NO;
+                self.searchModeEnabled = NO;
+                self.searchUiVisible = NO;
                 return;
             }
             
             if (status & MMSearchModeStatusGifMessageSent) {
                 [self dismissWebPic];
-                searchModeEnabled = NO;
-                searchUiVisible = NO;
+                self.searchModeEnabled = NO;
+                self.searchUiVisible = NO;
                 return;
             }
         }else{
@@ -344,20 +341,20 @@ static MMGifManager *_defaultManager = nil;
         return;
     }
     [_collectionView setContentOffset:CGPointMake(0, 0) animated:false];
-    [_timer invalidate];
+    //    [_timer invalidate];
     UIViewController *topController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     CGRect rect = [_attchedView convertRect:_attchedView.bounds toView:topController.view];
     CGPoint attachedPoint = CGPointMake(rect.origin.x + rect.size.width / 2, rect.origin.y - 10);
     [self.popover showAtPoint:attachedPoint popoverPostion:DXPopoverPositionUp withContentView:self.contentView inView:topController.view];
-    _timer = [NSTimer scheduledTimerWithTimeInterval:MMTIPDuration
-                                              target:self
-                                            selector:@selector(dismissWebPic)
-                                            userInfo:nil
-                                             repeats:NO];
+    //    _timer = [NSTimer scheduledTimerWithTimeInterval:MMTIPDuration
+    //                                              target:self
+    //                                            selector:@selector(dismissWebPic)
+    //                                            userInfo:nil
+    //                                             repeats:NO];
 }
 
 - (void)dismissWebPic {
-    [_timer invalidate];
+    //    [_timer invalidate];
     [self.popover dismiss];
 }
 
@@ -369,7 +366,7 @@ static MMGifManager *_defaultManager = nil;
 
 #pragma mark -- 搜索设置
 - (void)setSearchModeEnabled:(BOOL)enabled withInputView:(UIResponder<UITextInput> *_Nullable)input{
-    searchModeEnabled = enabled;
+    self.searchModeEnabled = enabled;
     if (!enabled) {
         [self deAttach];
         return;
@@ -412,97 +409,97 @@ static MMGifManager *_defaultManager = nil;
 }
 
 - (void)setSearchUiVisible:(BOOL)visible withAttatchedView:(UIView *_Nullable)attachedView{
-    searchUiVisible = visible;
+    self.searchUiVisible = visible;
     _attchedView = attachedView;
 }
 
 - (void)showTrending {
     [[MMEmotionCentre defaultCentre] switchToDefaultKeyboard];
-    currentPage = 1;
-    showingTrending = YES;
+    self.currentPage = 1;
+    self.showingTrending = YES;
     [_contentView bringSubviewToFront:_loadingView];
     [_loadingIndicator startAnimating];
-    [self getTrendingGifsAtPage:currentPage];
+    [self getTrendingGifsAtPage:self.currentPage];
 }
 
 #pragma mark -- 数据
 -(void)getTrendingGifsAtPage:(int)page {
     __weak MMGifManager *weakSelf = self;
-    [[MMEmotionCentre defaultCentre] trendingGifsAt:currentPage withPageSize:pageSize completionHandler:^(NSArray<MMGif *> * _Nullable gifs, NSError * _Nullable error) {
+    [[MMEmotionCentre defaultCentre] trendingGifsAt:page withPageSize:self.pageSize completionHandler:^(NSArray<MMGif *> * _Nullable gifs, NSError * _Nullable error) {
         
-        loadingMore = false;
-        [_contentView bringSubviewToFront:_collectionView];
-        if(currentPage == 1) {
-            [gifsArray removeAllObjects];
-            [_collectionView setContentOffset:CGPointMake(0, 0)];
+        weakSelf.loadingMore = false;
+        [weakSelf.contentView bringSubviewToFront:weakSelf.collectionView];
+        if(weakSelf.currentPage == 1) {
+            [weakSelf.gifsArray removeAllObjects];
+            [weakSelf.collectionView setContentOffset:CGPointMake(0, 0)];
             [weakSelf updateSearchModeAndSearchUIWithStatus:MMSearchModeStatusShowTrendingTriggered];
             if (gifs.count <= 0) {
-                [_contentView bringSubviewToFront:_loadingView];
-                [self.loadingIndicator stopAnimating];
-                self.loadingIndicator.hidden = true;
-                self.emptyLabel.hidden = false;
+                [weakSelf.contentView bringSubviewToFront:weakSelf.loadingView];
+                [weakSelf.loadingIndicator stopAnimating];
+                weakSelf.loadingIndicator.hidden = true;
+                weakSelf.emptyLabel.hidden = false;
                 return;
             }
         }
         
         if (gifs.count > 0) {
-            [gifsArray addObjectsFromArray:gifs];
-            [_collectionView reloadData];
+            [weakSelf.gifsArray addObjectsFromArray:gifs];
+            [weakSelf.collectionView reloadData];
         }else{
-            currentPage -= 1;
-            if (currentPage < 1) {
-                currentPage = 1;
+            weakSelf.currentPage -= 1;
+            if (weakSelf.currentPage < 1) {
+                weakSelf.currentPage = 1;
             }
-            loadingFinished = true;
+            weakSelf.loadingFinished = true;
         }
         
-        if (currentPage == 5) {
-            loadingFinished = true;
+        if (weakSelf.currentPage == 5) {
+            weakSelf.loadingFinished = true;
         }
     }];
 }
 
 -(void)getSearchGifsAtPage:(int)page {
     __weak MMGifManager *weakSelf = self;
-    [[MMEmotionCentre defaultCentre] searchGifsWithKey:currentKey At:page withPageSize:pageSize completionHandler:^(NSString * __nonnull searchKey, NSArray<MMGif *> * _Nullable gifs, NSError * _Nullable error) {
+    [[MMEmotionCentre defaultCentre] searchGifsWithKey:self.currentKey At:page withPageSize:self.pageSize completionHandler:^(NSString * __nonnull searchKey, NSArray<MMGif *> * _Nullable gifs, NSError * _Nullable error) {
         if (weakSelf == nil) {
             return;
         }
-        if (searchKey != currentKey) {
+        if (searchKey != weakSelf.currentKey) {
             return;
         }
-        loadingMore = false;
-        [_contentView bringSubviewToFront:_collectionView];
-        if(currentPage == 1) {
-            [gifsArray removeAllObjects];
-            [_collectionView setContentOffset:CGPointMake(0, 0)];
+        weakSelf.loadingMore = false;
+        [weakSelf.contentView bringSubviewToFront:weakSelf.collectionView];
+        if(weakSelf.currentPage == 1) {
+            [weakSelf.gifsArray removeAllObjects];
+            [weakSelf.collectionView setContentOffset:CGPointMake(0, 0)];
             if (gifs.count <= 0) {
-                [_contentView bringSubviewToFront:_loadingView];
-                [self.loadingIndicator stopAnimating];
-                self.loadingIndicator.hidden = true;
-                self.emptyLabel.hidden = false;
-                [weakSelf updateSearchModeAndSearchUIWithStatus:MMSearchModeStatusSearchResultEmpty];
+                [weakSelf.contentView bringSubviewToFront:weakSelf.loadingView];
+                [weakSelf.loadingIndicator stopAnimating];
+                weakSelf.loadingIndicator.hidden = true;
+                weakSelf.emptyLabel.hidden = false;
+                [weakSelf updateSearchModeAndSearchUIWithStatus:MMSearchModeStatusGifsDataReceivedWithEmptyResult];
                 return;
             }else{
-                [weakSelf updateSearchModeAndSearchUIWithStatus:MMSearchModeStatusGifsDataReceived];
+                [weakSelf updateSearchModeAndSearchUIWithStatus:MMSearchModeStatusGifsDataReceivedWithResult];
             }
         }
-        
         if (gifs.count > 0) {
-            [gifsArray addObjectsFromArray:gifs];
-            [_collectionView reloadData];
+            [weakSelf.gifsArray addObjectsFromArray:gifs];
+            [weakSelf.collectionView reloadData];
         }else{
-            currentPage -= 1;
-            if (currentPage < 1) {
-                currentPage = 1;
+            weakSelf.currentPage -= 1;
+            if (weakSelf.currentPage < 1) {
+                weakSelf.currentPage = 1;
             }
-            loadingFinished = true;
+            weakSelf.loadingFinished = true;
         }
         
-        if (currentPage == 5) {
-            loadingFinished = true;
+        if (weakSelf.currentPage == 5) {
+            weakSelf.loadingFinished = true;
         }
     }];
 }
 
 @end
+

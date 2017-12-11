@@ -56,7 +56,7 @@
         __weak typeof(self) weakSelf = self;
         [self.emojiImageView sd_setImageWithURL:url completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
             if(error == nil) {
-                [_loadingIndicator stopAnimating];
+                [weakSelf.loadingIndicator stopAnimating];
                 if (image.images.count > 0) {
                     weakSelf.emojiImageView.animationImages = image.images;
                     weakSelf.emojiImageView.image = image.images[0];
@@ -66,9 +66,9 @@
                     weakSelf.emojiImageView.image = image;
                 }
             }else{
-                [_loadingIndicator stopAnimating];
+                [weakSelf.loadingIndicator stopAnimating];
                 weakSelf.emojiImageView.image = [UIImage imageNamed:@"loading_error"];
-                _emojiImageView.userInteractionEnabled = YES;
+                weakSelf.emojiImageView.userInteractionEnabled = YES;
             }
             
         }];
@@ -83,18 +83,18 @@
 
 -(NSURL *)getWEbStickerThumbUrl:(MMGif *)webSticker {
     NSURL *url;
-    if(_picture.gifThumbImage != nil) {
-        url = [[NSURL alloc] initWithString:_picture.gifThumbImage];
+    if(webSticker.gifThumbImage != nil) {
+        url = [[NSURL alloc] initWithString:webSticker.gifThumbImage];
     }
     if(url == nil) {
-        if(_picture.thumbImage != nil) {
-            url = [[NSURL alloc] initWithString:_picture.thumbImage];
+        if(webSticker.thumbImage != nil) {
+            url = [[NSURL alloc] initWithString:webSticker.thumbImage];
         }
     }
     
     if(url == nil) {
-        if(_picture.mainImage != nil) {
-            url = [[NSURL alloc] initWithString:_picture.mainImage];
+        if(webSticker.mainImage != nil) {
+            url = [[NSURL alloc] initWithString:webSticker.mainImage];
         }
     }
     return url;
@@ -130,3 +130,4 @@
 
 
 @end
+

@@ -40,16 +40,6 @@
 @property (nonatomic, strong) NSString *mainImage;
 
 /**
- *  图片数据的base64
- */
-@property (nonatomic, strong) NSString *mainImageBase64;
-
-/**
- *  web sticker data
- */
-@property (nonatomic, strong) NSData *webStickerData;
-
-/**
  *  图片尺寸（pix）
  */
 @property (nonatomic, assign) CGSize size;

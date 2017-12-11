@@ -119,7 +119,7 @@
             __weak typeof(self) weakSelf = self;
             [self.bubbleView.imageView sd_setImageWithURL:url completed:^(UIImage *image, NSError *error, EMSDImageCacheType cacheType, NSURL *imageURL) {
                 if(error == nil && image) {
-                    if (image.images.count > 0) {
+                    if (image.images.count > 1) {
                         weakSelf.bubbleView.imageView.animationImages = image.images;
                         weakSelf.bubbleView.imageView.image = image.images[0];
                         weakSelf.bubbleView.imageView.animationDuration = image.duration;
@@ -203,7 +203,7 @@
     else if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]) {
         return kEMMessageImageSizeHeight;
     }else if([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]) {
-        return model.webStickerSize.height;
+        return model.gifSize.height;
     }
     else {
         CGFloat height = [EaseBaseMessageCell cellHeightWithModel:model];

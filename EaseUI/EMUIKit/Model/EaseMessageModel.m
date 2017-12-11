@@ -136,7 +136,7 @@
             }
             size = CGSizeMake(width, height);
         }
-        self.webStickerSize = size;
+        self.gifSize = size;
     }
     
     return self;
