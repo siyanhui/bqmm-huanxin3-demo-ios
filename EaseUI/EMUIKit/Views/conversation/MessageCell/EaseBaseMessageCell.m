@@ -90,15 +90,17 @@
         case EMMessageBodyTypeText:
         {
             //BQMM集成
-            if ([self.model.mmExt[@"txt_msgType"] isEqualToString:@"emojitype"]) {
+            if ([self.model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_EMOJI_TYPE]) {
                 CGFloat bubbleMaxWidth = self.bubbleMaxWidth;
                 if ([UIDevice currentDevice].systemVersion.floatValue == 7.0) {
                     bubbleMaxWidth = 200;
                 }
                 bubbleMaxWidth -= (self.leftBubbleMargin.left + self.leftBubbleMargin.right + self.rightBubbleMargin.left + self.rightBubbleMargin.right)/2;
-                CGSize size = [MMTextParser sizeForMMTextWithExtData:self.model.mmExt[@"msg_data"] font:self.messageTextFont maximumTextWidth:bubbleMaxWidth];
+                CGSize size = [MMTextParser sizeForMMTextWithExtData:self.model.mmExt[TEXT_MESG_DATA] font:self.messageTextFont maximumTextWidth:bubbleMaxWidth];
                 [self setBubbleWidth:size.width + 25];
                 
+            }else if ([self.model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]){
+                [self setBubbleWidth:self.model.webStickerSize.width];
             }
         }
             break;

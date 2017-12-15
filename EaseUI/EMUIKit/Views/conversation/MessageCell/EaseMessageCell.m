@@ -744,8 +744,8 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
         case EMMessageBodyTypeText:
         {
             UIFont *textFont = cell.messageTextFont;
-            if ([model.mmExt[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-                CGSize size = [MMTextParser sizeForMMTextWithExtData:model.mmExt[@"msg_data"] font:textFont maximumTextWidth:bubbleMaxWidth];
+            if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_EMOJI_TYPE]) {
+                CGSize size = [MMTextParser sizeForMMTextWithExtData:model.mmExt[TEXT_MESG_DATA] font:textFont maximumTextWidth:bubbleMaxWidth];
                 
                 height += (size.height > 20 ? size.height : 20) + 4;
             }

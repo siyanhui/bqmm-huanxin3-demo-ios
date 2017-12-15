@@ -96,6 +96,7 @@
 - (void)didSendText:(NSString *)text withExt:(NSDictionary*)ext;
 
 //BQMM集成
+- (void)didClickGifTap;
 /**
  *  发送表情MM大表情
  *

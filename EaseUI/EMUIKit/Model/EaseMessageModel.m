@@ -121,6 +121,22 @@
         //BQMM集成
         NSDictionary *ext = message.ext;
         self.mmExt = ext;
+        CGSize size = CGSizeZero;
+        if([ext[TEXT_MESG_TYPE] isEqualToString: TEXT_MESG_WEB_TYPE]) {
+            NSDictionary *msgData = ext[TEXT_MESG_DATA];
+            float height = [msgData[WEBSTICKER_HEIGHT] floatValue];
+            float width = [msgData[WEBSTICKER_WIDTH] floatValue];
+            //宽最大200 高最大 150
+            if (width > 200) {
+                height = 200.0 / width * height;
+                width = 200;
+            }else if(height > 150) {
+                width = 150.0 / height * width;
+                height = 150;
+            }
+            size = CGSizeMake(width, height);
+        }
+        self.webStickerSize = size;
     }
     
     return self;

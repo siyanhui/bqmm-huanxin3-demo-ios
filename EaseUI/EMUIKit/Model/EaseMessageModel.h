@@ -58,6 +58,7 @@
 
 //BQMM集成
 @property (strong, nonatomic) NSDictionary *mmExt;
+@property (nonatomic) CGSize webStickerSize;
 
 
 - (instancetype)initWithMessage:(EMMessage *)message;

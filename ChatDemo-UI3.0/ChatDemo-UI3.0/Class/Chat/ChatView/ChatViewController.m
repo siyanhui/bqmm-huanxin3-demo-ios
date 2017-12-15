@@ -23,7 +23,8 @@
 
 //BQMM集成
 #import "MMTextParser.h"
-
+#import <BQMM/BQMM.h>
+#import "MMTextView.h"
 
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate, EMChooseViewDelegate>
 {
@@ -54,6 +55,38 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(insertCallMessage:) name:@"insertCallMessage" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callOutWithChatter" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleCallNotification:) name:@"callControllerClose" object:nil];
+    
+    
+//    UITextView *textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, 44)];
+//    [textView setText:@"UITextView居中对齐"];
+//    textView.backgroundColor = [UIColor redColor];
+//    textView.textAlignment = NSTextAlignmentCenter;
+//    [self.view addSubview:textView];
+//    
+//    
+//    UITextView *textView1 = [[UITextView alloc] initWithFrame:CGRectMake(0, 128, self.view.frame.size.width, 44)];
+//    [textView1 setText:@"UITextView右对齐"];
+//    textView1.backgroundColor = [UIColor redColor];
+//    textView1.textAlignment = NSTextAlignmentRight;
+//    [self.view addSubview:textView1];
+//    
+//    
+//    
+//    MMTextView *textView4 = [[MMTextView alloc] initWithFrame:CGRectMake(0, 192, self.view.frame.size.width, 44)];
+//    [textView4 setText:@"MMTextView 居中对齐"];
+//    textView4.backgroundColor = [UIColor redColor];
+//    textView4.textAlignment = NSTextAlignmentCenter;
+//    textView4.textColor = [UIColor blueColor];
+//    textView4.font = [UIFont systemFontOfSize:22];
+//    [self.view addSubview:textView4];
+//    
+//    
+//    
+//    MMTextView *textView3 = [[MMTextView alloc] initWithFrame:CGRectMake(0, 256, self.view.frame.size.width, 44)];
+//    [textView3 setText:@"MMTextView 右对齐"];
+//    textView3.backgroundColor = [UIColor redColor];
+//    textView3.textAlignment = NSTextAlignmentRight;
+//    [self.view addSubview:textView3];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -428,9 +461,9 @@
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     if (self.menuIndexPath && self.menuIndexPath.row > 0) {
         id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
-        if ([model.mmExt[@"txt_msgType"] isEqualToString:@"emojitype"]) {
+        if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_EMOJI_TYPE]) {
             
-            pasteboard.string = [MMTextParser stringWithExtData:model.mmExt[@"msg_data"]];
+            pasteboard.string = [MMTextParser stringWithExtData:model.mmExt[TEXT_MESG_DATA]];
         }
         else {
             pasteboard.string = model.text;

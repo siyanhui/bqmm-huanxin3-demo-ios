@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MMTheme.h"
 #import "MMEmoji.h"
+#import "MMGif.h"
 /**
  sdk region
  */
@@ -47,6 +48,12 @@ typedef enum
 } MMSDKMode;
 
 @protocol MMEmotionCentreDelegate <NSObject>
+
+@required
+/**
+ *  the delegate method handles the tap of gif
+ */
+- (void)didClickGifTap;
 
 @optional
 
@@ -231,5 +238,17 @@ typedef enum
  *  clear cache
  */
 - (void)clearCache;
+
+
+//流行表情数据接口
+- (void)trendingGifsAt:(int)page
+          withPageSize:(int)pageSize
+     completionHandler:(void (^ __nonnull)(NSArray<MMGif *> * __nullable gifs, NSError * __nullable error))completionHandler;
+
+//搜索表情数据接口
+- (void)searchGifsWithKey:(NSString * _Nullable)key
+                       At:(int)page
+             withPageSize:(int)pageSize
+        completionHandler:(void (^ __nonnull)(NSString * __nonnull searchKey, NSArray<MMGif *> * __nullable gifs, NSError * __nullable error))completionHandler;
 
 @end

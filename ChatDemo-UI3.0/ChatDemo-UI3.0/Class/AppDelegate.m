@@ -68,10 +68,16 @@
     
     //BQMM集成
     // 初始化表情MMSDK
+//    NSString *appId = @"dc5bdb26a4e745e3ad4198ff9ea477eb";
+//    NSString *secret = @"3e48f004b96640a3b43a5d11ce913b88";
+    
     NSString *appId = @"15e0710942ec49a29d2224a6af4460ee";
     NSString *secret = @"b11e0936a9d04be19300b1d6eec0ccd5";
+//    [MMEmotionCentre defaultCentre].useHttp = false;
     [[MMEmotionCentre defaultCentre] setAppId:appId
                                        secret:secret];
+    [MMEmotionCentre defaultCentre].sdkLanguage = MMLanguageChinese;
+    [MMEmotionCentre defaultCentre].sdkRegion = MMRegionOther;
 
     
 #warning 初始化环信SDK，详细内容在AppDelegate+EaseMob.m 文件中

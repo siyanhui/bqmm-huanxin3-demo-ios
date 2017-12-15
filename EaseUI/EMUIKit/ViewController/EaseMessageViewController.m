@@ -30,6 +30,7 @@
 //BQMM集成
 #import <BQMM/BQMM.h>
 #import "MMTextParser.h"
+#import "MMGifManager.h"
 
 
 #define KHintAdjustY    50
@@ -146,6 +147,12 @@
     [[EaseChatBarMoreView appearance] setMoreViewBackgroundColor:[UIColor colorWithRed:240 / 255.0 green:242 / 255.0 blue:247 / 255.0 alpha:1.0]];
     
     [self tableViewDidTriggerHeaderRefresh];
+    
+    [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
+    [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];
+    [MMGifManager defaultManager].selectedHandler = ^(MMGif * _Nullable gif) {
+        [self didSendGifMessage:gif];
+    };
 }
 
 - (void)setupEmotion
@@ -1112,9 +1119,9 @@
             //BQMM集成
         case EMMessageBodyTypeText:
         {
-            if ([model.mmExt[@"txt_msgType"] isEqualToString:@"facetype"]) {
+            if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]) {
                 [self.chatToolbar endEditing:YES];
-                UIViewController *emojiController = [[MMEmotionCentre defaultCentre] controllerForEmotionCode:model.mmExt[@"msg_data"][0][0]];
+                UIViewController *emojiController = [[MMEmotionCentre defaultCentre] controllerForEmotionCode:model.mmExt[TEXT_MESG_DATA][0][0]];
                 [self.navigationController pushViewController:emojiController animated:YES];
             }
         }
@@ -1236,8 +1243,8 @@
         }
     }
     NSArray *textImgArray = textView.textImgArray;
-    NSDictionary *mmExt = @{@"txt_msgType":@"emojitype",
-                            @"msg_data":[MMTextParser extDataWithTextImageArray:textImgArray]};;
+    NSDictionary *mmExt = @{TEXT_MESG_TYPE:TEXT_MESG_EMOJI_TYPE,
+                            TEXT_MESG_DATA:[MMTextParser extDataWithTextImageArray:textImgArray]};;
     [ext addEntriesFromDictionary:mmExt];
     [self sendTextMessage:sendStr withExt:ext];
 }
@@ -1321,6 +1328,27 @@
 }
 
 //BQMM集成
+- (void)didClickGifTap {
+    //点击gif tab 后应该保证搜索模式是打开的 搜索UI是允许显示的
+    [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
+    [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];
+    [[MMGifManager defaultManager] showTrending];
+}
+
+-(void)didSendGifMessage:(MMGif *)gif {
+    NSString *sendStr = [@"[" stringByAppendingFormat:@"%@]", gif.text];
+    NSDictionary *msgData = @{WEBSTICKER_URL: gif.mainImage, WEBSTICKER_IS_GIF: (gif.isAnimated ? @"1" : @"0"), WEBSTICKER_ID: gif.imageId,WEBSTICKER_WIDTH: @((float)gif.size.width), WEBSTICKER_HEIGHT: @((float)gif.size.height)};
+    NSDictionary *extDic = @{TEXT_MESG_TYPE:TEXT_MESG_WEB_TYPE,
+                             TEXT_MESG_DATA:msgData
+                             };
+    
+    EMMessage *message = [EaseSDKHelper sendTextMessage:sendStr
+                                                     to:self.conversation.conversationId
+                                            messageType:[self _messageTypeFromConversationType]
+                                             messageExt:extDic];
+    [self _sendMessage:message];
+}
+
 - (void)didSendMMFace:(MMEmoji *)emoji
 {
     [self sendMMFaceMessage:emoji];
@@ -1628,8 +1656,8 @@
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     if (self.menuIndexPath && self.menuIndexPath.row > 0) {
         id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
-        if ([model.mmExt[@"txt_msgType"] isEqualToString:@"emojitype"]) {
-            pasteboard.string = [MMTextParser stringWithExtData:model.mmExt[@"msg_data"]];
+        if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_EMOJI_TYPE]) {
+            pasteboard.string = [MMTextParser stringWithExtData:model.mmExt[TEXT_MESG_DATA]];
         }
         else {
             pasteboard.string = model.text;
@@ -1817,11 +1845,10 @@
     [self _sendMessage:message];
 }
 
-//BQMM集成
 -(void)sendMMFaceMessage:(MMEmoji *)emoji
 {
-    NSDictionary *mmExt = @{@"txt_msgType":@"facetype",
-                            @"msg_data":[MMTextParser extDataWithEmoji:emoji]};
+    NSDictionary *mmExt = @{TEXT_MESG_TYPE:TEXT_MESG_FACE_TYPE,
+                            TEXT_MESG_DATA:[MMTextParser extDataWithEmoji:emoji]};
     [self sendMMFaceMessage:emoji withExt:mmExt];
 }
 

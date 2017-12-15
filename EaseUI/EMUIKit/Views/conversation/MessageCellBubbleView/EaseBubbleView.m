@@ -67,6 +67,7 @@
         _backgroundImageView = [[UIImageView alloc] init];
         _backgroundImageView.translatesAutoresizingMaskIntoConstraints = NO;
         _backgroundImageView.backgroundColor = [UIColor clearColor];
+        _backgroundImageView.userInteractionEnabled = YES;
         [self addSubview:_backgroundImageView];
         [self _setupBackgroundImageViewConstraints];
     }
