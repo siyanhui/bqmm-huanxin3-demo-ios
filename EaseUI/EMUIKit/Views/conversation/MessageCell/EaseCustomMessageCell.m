@@ -23,6 +23,7 @@
 
 #import "UIImage+EMGIF.h"
 #import "UIImageView+EMWebCache.h"
+#import "MMGifManager.h"
 
 
 @interface EaseCustomMessageCell ()

@@ -18,6 +18,7 @@
 
 #import <BQMM/BQMM.h>
 #import "MMTextParser.h"
+#import "MMGifManager.h"
 
 
 @interface EaseBaseMessageCell()

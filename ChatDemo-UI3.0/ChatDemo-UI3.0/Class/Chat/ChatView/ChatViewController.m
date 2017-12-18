@@ -25,6 +25,7 @@
 #import "MMTextParser.h"
 #import <BQMM/BQMM.h>
 #import "MMTextView.h"
+#import "MMGifManager.h"
 
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate, EMChooseViewDelegate>
 {

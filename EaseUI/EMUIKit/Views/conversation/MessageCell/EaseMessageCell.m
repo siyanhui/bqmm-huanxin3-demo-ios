@@ -25,6 +25,7 @@
 //BQMM集成
 #import "MMTextView.h"
 #import "MMTextParser.h"
+#import "MMGifManager.h"
 
 CGFloat const EaseMessageCellPadding = 10;
 

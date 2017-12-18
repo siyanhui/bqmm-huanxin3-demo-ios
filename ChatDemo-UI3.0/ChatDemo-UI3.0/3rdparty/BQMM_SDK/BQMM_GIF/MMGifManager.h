@@ -8,6 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import <BQMM/BQMM.h>
+
+#define TEXT_MESG_TYPE @"txt_msgType"  //key for text message
+#define TEXT_MESG_FACE_TYPE @"facetype" //key for big emoji type
+#define TEXT_MESG_EMOJI_TYPE @"emojitype" //key for photo-text message
+#define TEXT_MESG_WEB_TYPE @"webtype" //key for web sticker message
+#define TEXT_MESG_DATA @"msg_data"  //key for ext data of message
+
+#define WEBSTICKER_IS_GIF @"is_gif"  //key for web sticker is gif or not
+#define WEBSTICKER_ID @"data_id"  //key for web sticker id
+#define WEBSTICKER_URL @"sticker_url"  //key for web sticker url
+#define WEBSTICKER_HEIGHT @"h"  //key for web sticker height
+#define WEBSTICKER_WIDTH @"w"  //key for web sticker width
+
 typedef NS_OPTIONS (NSInteger, MMSearchModeStatus) {
     MMSearchModeStatusKeyboardHide = 1 << 0,         //收起键盘
     MMSearchModeStatusInputEndEditing = 1 << 1,         //收起键盘

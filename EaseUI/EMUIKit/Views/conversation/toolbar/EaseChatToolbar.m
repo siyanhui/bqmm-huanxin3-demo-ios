@@ -888,6 +888,7 @@
 //表情MM代理
 #pragma mark - *MMEmotionCentreDelegate
 - (void)didClickGifTab {
+    self.faceButton.selected = NO;
     if ([self.delegate respondsToSelector:@selector(didClickGifTab)]) {
         [self.delegate didClickGifTab];
     }

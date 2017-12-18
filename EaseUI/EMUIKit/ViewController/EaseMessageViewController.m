@@ -151,8 +151,14 @@
     //BQMM集成   设置gif搜索相关
     [[MMGifManager defaultManager] setSearchModeEnabled:true withInputView:((EaseChatToolbar *)self.chatToolbar).inputTextView];
     [[MMGifManager defaultManager] setSearchUiVisible:true withAttatchedView:self.chatToolbar];
+    __weak EaseMessageViewController* weakSelf = self;
     [MMGifManager defaultManager].selectedHandler = ^(MMGif * _Nullable gif) {
-        [self didSendGifMessage:gif];
+        __strong EaseMessageViewController *tempSelf = weakSelf;
+        if(tempSelf) {
+            ((EaseChatToolbar *)self.chatToolbar).inputTextView.text = nil;
+            [tempSelf didSendGifMessage:gif];
+        }
+        
     };
 }
 
