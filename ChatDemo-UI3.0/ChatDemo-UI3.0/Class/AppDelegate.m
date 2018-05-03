@@ -68,16 +68,16 @@
     
     //BQMM集成
     // 初始化表情MMSDK
-//    NSString *appId = @"dc5bdb26a4e745e3ad4198ff9ea477eb";
-//    NSString *secret = @"3e48f004b96640a3b43a5d11ce913b88";
-    
-    NSString *appId = @"15e0710942ec49a29d2224a6af4460ee";
-    NSString *secret = @"b11e0936a9d04be19300b1d6eec0ccd5";
+    NSString *appId = @"app id";
+    NSString *secret = @"app secret";
 //    [MMEmotionCentre defaultCentre].useHttp = false;
     [[MMEmotionCentre defaultCentre] setAppId:appId
                                        secret:secret];
     [MMEmotionCentre defaultCentre].sdkLanguage = MMLanguageChinese;
     [MMEmotionCentre defaultCentre].sdkRegion = MMRegionOther;
+    
+    MMTheme *theme = [[MMTheme alloc] init];
+    [[MMEmotionCentre defaultCentre] setTheme:theme];
 
     
 #warning 初始化环信SDK，详细内容在AppDelegate+EaseMob.m 文件中
@@ -142,6 +142,17 @@ didFinishLaunchingWithOptions:launchOptions
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:RedpacketAlipayNotifaction object:nil];
+}
+
+//BQMM集成
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    [[MMEmotionCentre defaultCentre] clearSession];
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    //BQMM集成
+    [[MMEmotionCentre defaultCentre] clearCache];
 }
 
 // NOTE: iOS9.0之前使用的API接口

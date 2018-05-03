@@ -23,6 +23,7 @@
 #import "EaseLocalDefine.h"
 
 //BQMM集成
+#import <BQMM/BQMM.h>
 #import "MMTextView.h"
 #import "MMTextParser.h"
 #import "MMGifManager.h"
@@ -224,7 +225,7 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
     
     self.bubbleMaxWidthConstraint = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.bubbleMaxWidth];
     [self addConstraint:self.bubbleMaxWidthConstraint];
-//    self.bubbleMaxWidthConstraint.active = YES;
+    //    self.bubbleMaxWidthConstraint.active = YES;
     
     //status button
     self.statusWidthConstraint = [NSLayoutConstraint constraintWithItem:self.statusButton attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.statusSize];
@@ -241,7 +242,7 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
     [self _updateHasReadWidthConstraint];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.hasRead attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.hasRead attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.statusButton attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
-//    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.hasRead attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.activity attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+    //    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.hasRead attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.activity attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
 }
 
 #pragma mark - Update Constraint
@@ -279,11 +280,11 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
 - (void)_updateBubbleMaxWidthConstraint
 {
     [self removeConstraint:self.bubbleMaxWidthConstraint];
-//    self.bubbleMaxWidthConstraint.active = NO;
+    //    self.bubbleMaxWidthConstraint.active = NO;
     
     self.bubbleMaxWidthConstraint = [NSLayoutConstraint constraintWithItem:self.bubbleView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:self.bubbleMaxWidth];
     [self addConstraint:self.bubbleMaxWidthConstraint];
-//    self.bubbleMaxWidthConstraint.active = YES;
+    //    self.bubbleMaxWidthConstraint.active = YES;
 }
 
 //BQMM集成
@@ -316,7 +317,7 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
                 if (!image) {
                     image = _model.image;
                     if (!image) {
-                        [_bubbleView.imageView sd_setImageWithURL:[NSURL URLWithString:_model.fileURLPath] placeholderImage:[UIImage imageNamed:_model.failImageName]];
+
                     } else {
                         _bubbleView.imageView.image = image;
                     }
@@ -600,13 +601,13 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
                 break;
             case EMMessageBodyTypeVoice:
             {
-//                _model.isMediaPlaying = !_model.isMediaPlaying;
-//                if (_model.isMediaPlaying) {
-//                    [_bubbleView.voiceImageView startAnimating];
-//                }
-//                else{
-//                    [_bubbleView.voiceImageView stopAnimating];
-//                }
+                //                _model.isMediaPlaying = !_model.isMediaPlaying;
+                //                if (_model.isMediaPlaying) {
+                //                    [_bubbleView.voiceImageView startAnimating];
+                //                }
+                //                else{
+                //                    [_bubbleView.voiceImageView stopAnimating];
+                //                }
                 if ([_delegate respondsToSelector:@selector(messageCellSelected:)]) {
                     [_delegate messageCellSelected:_model];
                 }
@@ -648,25 +649,25 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
 
 #pragma mark - IModelCell
 /*
-- (BOOL)isCustomBubbleView:(id<IMessageModel>)model
-{
-    return NO;
-}
-
-- (void)setCustomModel:(id<IMessageModel>)model
-{
-
-}
-
-- (void)setCustomBubbleView:(id<IMessageModel>)model
-{
-
-}
-
-- (void)updateCustomBubbleViewMargin:(UIEdgeInsets)bubbleMargin model:(id<IMessageModel>)model
-{
-
-}*/
+ - (BOOL)isCustomBubbleView:(id<IMessageModel>)model
+ {
+ return NO;
+ }
+ 
+ - (void)setCustomModel:(id<IMessageModel>)model
+ {
+ 
+ }
+ 
+ - (void)setCustomBubbleView:(id<IMessageModel>)model
+ {
+ 
+ }
+ 
+ - (void)updateCustomBubbleViewMargin:(UIEdgeInsets)bubbleMargin model:(id<IMessageModel>)model
+ {
+ 
+ }*/
 
 #pragma mark - public
 
@@ -747,8 +748,19 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
             UIFont *textFont = cell.messageTextFont;
             if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_EMOJI_TYPE]) {
                 CGSize size = [MMTextParser sizeForMMTextWithExtData:model.mmExt[TEXT_MESG_DATA] font:textFont maximumTextWidth:bubbleMaxWidth];
-                
                 height += (size.height > 20 ? size.height : 20) + 4;
+            }
+            else if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]) {
+                //BQMM 集成 计算图片尺寸
+                CGSize size =
+                [MMImageView sizeForImageSize:CGSizeMake(kEMMessageImageSizeHeight, kEMMessageImageSizeHeight) imgMaxSize:CGSizeMake(kEMMessageImageSizeHeight, kEMMessageImageSizeHeight)];
+                height += size.height;
+            }else if([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]) {
+                //BQMM 集成 计算图片尺寸
+                //宽最大200 高最大 150
+                CGSize size =
+                [MMImageView sizeForImageSize:CGSizeMake(model.gifSize.width, model.gifSize.height) imgMaxSize:CGSizeMake(200, 150)];
+                height += size.height;
             }
             else {
                 NSString *text = model.text;
@@ -775,7 +787,7 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
                 retSize.width = width;
                 retSize.height = kEMMessageImageSizeHeight;
             }
-
+            
             height += retSize.height;
         }
             break;
@@ -815,7 +827,7 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
         default:
             break;
     }
-
+    
     height += EaseMessageCellPadding;
     model.cellHeight = height;
     
@@ -823,3 +835,4 @@ NSString *const EaseMessageCellIdentifierSendFile = @"EaseMessageCellSendFile";
 }
 
 @end
+

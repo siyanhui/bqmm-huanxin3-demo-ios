@@ -141,7 +141,8 @@ typedef enum
  *  @param appkey     third party appKey
  *  @param platformId third party platform id
  */
-- (void)setAppkey:(nonnull NSString *)appkey platformId:(nonnull NSString *)platformId;
+- (void)setAppkey:(nonnull NSString *)appkey
+       platformId:(nonnull NSString *)platformId;
 
 /**
  *  initialize SDK
@@ -149,7 +150,8 @@ typedef enum
  *  @param appId  the unique app id that assigned to your app
  *  @param secret the unique app secret that assigned to your app
  */
-- (void)setAppId:(nonnull NSString *)appId secret:(nonnull NSString *)secret;
+- (void)setAppId:(nonnull NSString *)appId
+          secret:(nonnull NSString *)secret;
 
 /**
  *  set userId to track the status of unique user
@@ -206,14 +208,6 @@ typedef enum
  *  @param enable       enable
  */
 - (void)setUnicodeEmojiTabEnabled: (BOOL)enable;
-/**
- *  the detail view for a single emoji
- *
- *  @param emojiCode the unique code for emoji
- *
- *  @return the detail view controller for emoji
- */
-- (nonnull UIViewController *)controllerForEmotionCode:(nonnull NSString *)emojiCode;
 
 /**
  *  fetch emojis according to emoji type and emoji code
@@ -241,12 +235,12 @@ typedef enum
 - (void)clearCache;
 
 
-//流行表情数据接口
+//trending gif data
 - (void)trendingGifsAt:(int)page
           withPageSize:(int)pageSize
      completionHandler:(void (^ __nonnull)(NSArray<MMGif *> * __nullable gifs, NSError * __nullable error))completionHandler;
 
-//搜索表情数据接口
+//search gif data
 - (void)searchGifsWithKey:(NSString * _Nullable)key
                        At:(int)page
              withPageSize:(int)pageSize

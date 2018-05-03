@@ -278,9 +278,11 @@ static MMGifManager *_defaultManager = nil;
         if (cell.emojiImageView.userInteractionEnabled) {
             return;
         }
+        MMGif *gif = cell.picture;
+        NSString *keyword = self.showingTrending? @"_trending_":  self.currentKey;
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"MMSendGifNotification" object:nil userInfo:@{@"gifId":gif.imageId, @"keyword": keyword ? keyword: @""}];
         [self updateSearchModeAndSearchUIWithStatus:MMSearchModeStatusGifMessageSent];
         if (self.selectedHandler) {
-            MMGif *gif = cell.picture;
             self.selectedHandler(gif);
         }
     }
@@ -325,6 +327,7 @@ static MMGifManager *_defaultManager = nil;
             }
             
             if (status & MMSearchModeStatusGifMessageSent) {
+                
                 [self dismissWebPic];
                 self.searchModeEnabled = NO;
                 self.searchUiVisible = NO;

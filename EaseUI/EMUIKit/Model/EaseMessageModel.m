@@ -15,9 +15,6 @@
 #import "EaseEmotionEscape.h"
 #import "EaseConvertToCommonEmoticonsHelper.h"
 
-//BQMM集成
-#import "MMGifManager.h"
-
 @implementation EaseMessageModel
 
 - (instancetype)initWithMessage:(EMMessage *)message

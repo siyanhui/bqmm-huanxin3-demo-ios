@@ -62,7 +62,7 @@
         default:
             break;
     }    return flag;
-
+    
 }
 
 //BQMM集成
@@ -74,69 +74,31 @@
     else if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]) {
         //大表情显示
         self.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_loading"];
-        NSArray *codes = nil;
+        NSString *emojiCode = nil;
         if (model.mmExt[TEXT_MESG_DATA]) {
-            codes = @[model.mmExt[TEXT_MESG_DATA][0][0]];
+            emojiCode = model.mmExt[TEXT_MESG_DATA][0][0];
         }
         //兼容1.0之前（含）版本的消息格式
         else {
-            codes = @[model.text];
+            emojiCode = model.text;
         }
-        self.bubbleView.imageView.tag ++;
-        __block NSInteger tag = self.bubbleView.imageView.tag;
-        __weak typeof(self) weakSelf = self;
-        [[MMEmotionCentre defaultCentre] fetchEmojisByType:MMFetchTypeBig codes:codes completionHandler:^(NSArray *emojis) {
-            if (tag != weakSelf.bubbleView.imageView.tag) {
-                return;
-            }
-            if (emojis.count > 0) {
-                MMEmoji *emoji = emojis[0];
-                if ([weakSelf.model.mmExt[TEXT_MESG_DATA][0][0] isEqualToString:emoji.emojiCode]) {
-                    if (emoji.emojiImage) {
-                        if(emojis.count == 1) {
-                            weakSelf.bubbleView.imageView.image = emoji.emojiImage;
-                        }else{
-                            weakSelf.bubbleView.imageView.animationImages = emoji.emojiImage.images;
-                            weakSelf.bubbleView.imageView.image = emoji.emojiImage.images[0];
-                            weakSelf.bubbleView.imageView.animationDuration = emoji.emojiImage.duration;
-                            [weakSelf.bubbleView.imageView startAnimating];
-                        }
-                    }else{
-                        NSLog(@"weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@mm_emoji_error]");
-                        weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_error"];
-                    }
-                }
-            }
-            else {
-                weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_error"];
-            }
-        }];
-
-    }else if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]) {
-        self.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_loading"];
-        NSDictionary *msgData = model.mmExt[TEXT_MESG_DATA];
-        NSString *webStickerUrl = msgData[WEBSTICKER_URL];
-        NSURL *url = [[NSURL alloc] initWithString:webStickerUrl];
-        if (url != nil) {
-            __weak typeof(self) weakSelf = self;
-            [self.bubbleView.imageView sd_setImageWithURL:url placeholderImage:nil options:SDWebImageAvoidAutoSetImage completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-                if(error == nil && image) {
-                    if (image.images.count > 1) {
-                        weakSelf.bubbleView.imageView.animationImages = image.images;
-                        weakSelf.bubbleView.imageView.image = image.images[0];
-                        weakSelf.bubbleView.imageView.animationDuration = image.duration;
-                        [weakSelf.bubbleView.imageView startAnimating];
-                    }else{
-                        weakSelf.bubbleView.imageView.image = image;
-                    }
-                }else{
-                    weakSelf.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_error"];
-                }
-            }];
-            
-        }else{
+        
+        if (emojiCode != nil && emojiCode.length > 0) {
+            self.bubbleView.imageView.errorImage = [UIImage imageNamed:@"mm_emoji_error"];
+            self.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_loading"];
+            [self.bubbleView.imageView setImageWithEmojiCode:emojiCode];
+        }else {
             self.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_error"];
         }
+        
+    }else if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]) {
+
+        NSDictionary *msgData = model.mmExt[TEXT_MESG_DATA];
+        NSString *webStickerUrl = msgData[WEBSTICKER_URL];
+        NSString *webStickerId = msgData[WEBSTICKER_ID];
+        self.bubbleView.imageView.image = [UIImage imageNamed:@"mm_emoji_loading"];
+        self.bubbleView.imageView.errorImage = [UIImage imageNamed:@"mm_emoji_error"];
+        [self.bubbleView.imageView setImageWithUrl:webStickerUrl gifId:webStickerId];
     }
     
     if (model.avatarURLPath) {
@@ -162,7 +124,7 @@
         
         _bubbleView.imageView.image = [UIImage imageNamed:model.failImageName];
     }
-
+    
 }
 
 //BQMM集成
@@ -202,11 +164,6 @@
     if ([model.mmExt objectForKey:@"em_emotion"]) {
         return 100;
     }
-    else if ([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]) {
-        return kEMMessageImageSizeHeight;
-    }else if([model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]) {
-        return model.gifSize.height;
-    }
     else {
         CGFloat height = [EaseBaseMessageCell cellHeightWithModel:model];
         return height;
@@ -214,3 +171,4 @@
 }
 
 @end
+

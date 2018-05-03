@@ -55,7 +55,7 @@
         cell.messageNameIsHidden = NO;
     }
     
-//    cell.bubbleMargin = UIEdgeInsetsMake(8, 15, 8, 10);
+    //    cell.bubbleMargin = UIEdgeInsetsMake(8, 15, 8, 10);
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
@@ -99,9 +99,18 @@
                 bubbleMaxWidth -= (self.leftBubbleMargin.left + self.leftBubbleMargin.right + self.rightBubbleMargin.left + self.rightBubbleMargin.right)/2;
                 CGSize size = [MMTextParser sizeForMMTextWithExtData:self.model.mmExt[TEXT_MESG_DATA] font:self.messageTextFont maximumTextWidth:bubbleMaxWidth];
                 [self setBubbleWidth:size.width + 25];
-                
+            }else if ([self.model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_FACE_TYPE]){
+
+                //BQMM 集成 计算图片尺寸
+                CGSize size =
+                [MMImageView sizeForImageSize:CGSizeMake(kEMMessageImageSizeHeight, kEMMessageImageSizeHeight) imgMaxSize:CGSizeMake(kEMMessageImageSizeHeight, kEMMessageImageSizeHeight)];
+                [self setBubbleWidth:size.width + self.bubbleMargin.left + self.bubbleMargin.right];
             }else if ([self.model.mmExt[TEXT_MESG_TYPE] isEqualToString:TEXT_MESG_WEB_TYPE]){
-                [self setBubbleWidth:self.model.gifSize.width];
+                //BQMM 集成 计算图片尺寸
+                //宽最大200 高最大 150
+                CGSize size =
+                [MMImageView sizeForImageSize:CGSizeMake(self.model.gifSize.width, self.model.gifSize.height) imgMaxSize:CGSizeMake(200, 150)];
+                [self setBubbleWidth:size.width + self.bubbleMargin.left + self.bubbleMargin.right];
             }
         }
             break;
@@ -351,3 +360,4 @@
 }
 
 @end
+

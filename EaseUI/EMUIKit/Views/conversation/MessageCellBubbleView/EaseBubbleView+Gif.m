@@ -42,7 +42,10 @@
 
 - (void)setupGifBubbleView
 {
-    self.imageView = [[UIImageView alloc] init];
+    //BQMM集成
+    self.imageView = [[MMImageView alloc] init];
+    //    self.imageView = [[UIImageView alloc] init];
+    
     self.imageView.translatesAutoresizingMaskIntoConstraints = NO;
     self.imageView.backgroundColor = [UIColor clearColor];
     self.imageView.contentMode = UIViewContentModeScaleAspectFit;
@@ -50,7 +53,7 @@
     self.backgroundImageView.hidden = YES;
     
     [self _setupImageBubbleConstraints];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:100]];
+//    [self addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationLessThanOrEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:100]];
 }
 
 - (void)updateGifMargin:(UIEdgeInsets)margin
@@ -65,3 +68,4 @@
 }
 
 @end
+

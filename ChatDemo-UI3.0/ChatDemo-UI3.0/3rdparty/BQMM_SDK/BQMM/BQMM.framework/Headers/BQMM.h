@@ -9,7 +9,7 @@
 #ifndef BQMM_h
 #define BQMM_h
 
-#define BQMM_VERSION 0x00020000
+#define BQMM_VERSION 0x00020100
 #define BQMM_BUILD @"release"
 
 #import "MMEmotionCentre.h"
@@ -17,6 +17,7 @@
 #import "MMEmoji.h"
 #import "MMGif.h"
 #import "UITextView+BQMM.h"
+#import "MMImageView.h"
 
 
 #endif /* BQMM_h */

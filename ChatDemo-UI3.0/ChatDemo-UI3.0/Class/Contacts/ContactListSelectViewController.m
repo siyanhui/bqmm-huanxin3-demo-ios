@@ -16,9 +16,6 @@
 #import "UserProfileManager.h"
 #import "RedPacketChatViewController.h"
 
-//BQMM集成
-#import "MMGifManager.h"
-
 
 @interface ContactListSelectViewController () <EMUserListViewControllerDelegate,EMUserListViewControllerDataSource>
 

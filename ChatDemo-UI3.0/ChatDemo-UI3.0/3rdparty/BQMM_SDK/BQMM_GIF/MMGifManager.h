@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <BQMM/BQMM.h>
 
+
 #define TEXT_MESG_TYPE @"txt_msgType"  //key for text message
 #define TEXT_MESG_FACE_TYPE @"facetype" //key for big emoji type
 #define TEXT_MESG_EMOJI_TYPE @"emojitype" //key for photo-text message
@@ -43,5 +44,4 @@ typedef void (^MMGifSelectedHandler)(MMGif * _Nullable gif); //搜索表情点�
 - (void)setSearchModeEnabled:(BOOL)enabled withInputView:(UIResponder<UITextInput> *_Nullable)input;
 - (void)setSearchUiVisible:(BOOL)visible withAttatchedView:(UIView *_Nullable)attachedView;
 - (void)showTrending;
-
 @end

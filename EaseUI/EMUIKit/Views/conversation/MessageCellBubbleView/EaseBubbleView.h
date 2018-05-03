@@ -12,6 +12,8 @@
 
 
 #import <UIKit/UIKit.h>
+//BQMM集成
+#import <BQMM/BQMM.h>
 
 extern CGFloat const EaseMessageCellPadding;
 
@@ -47,7 +49,9 @@ extern NSString *const EaseMessageCellIdentifierRecvFile;
 @property (strong, nonatomic) UILabel *textLabel;
 
 //image views
-@property (strong, nonatomic) UIImageView *imageView;
+//BQMM集成
+@property (strong, nonatomic) MMImageView *imageView;
+//@property (strong, nonatomic) UIImageView *imageView;
 
 //location views
 @property (strong, nonatomic) UIImageView *locationImageView;
@@ -71,3 +75,4 @@ extern NSString *const EaseMessageCellIdentifierRecvFile;
                       isSender:(BOOL)isSender;
 
 @end
+

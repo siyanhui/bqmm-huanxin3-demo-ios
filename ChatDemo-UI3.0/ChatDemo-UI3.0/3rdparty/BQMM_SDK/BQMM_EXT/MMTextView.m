@@ -140,7 +140,8 @@
                                              MMTextAttachment *attachment = (MMTextAttachment *)value;
                                              [weakSelf.attachmentRanges addObject:[NSValue valueWithRange:range]];
                                              [weakSelf.attachments addObject:value];
-                                             UIImageView *imgView = [[UIImageView alloc] initWithImage:attachment.emoji.emojiImage];
+                                             UIImageView *imgView = [[UIImageView alloc] init];
+                                             imgView.image = attachment.emoji.emojiImage;
                                              attachment.image = nil;
                                              [weakSelf.imageViews addObject:imgView];
                                          }
