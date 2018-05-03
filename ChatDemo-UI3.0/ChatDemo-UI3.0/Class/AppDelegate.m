@@ -77,6 +77,12 @@
     [MMEmotionCentre defaultCentre].sdkRegion = MMRegionOther;
     
     MMTheme *theme = [[MMTheme alloc] init];
+    CGFloat keyboardHeight = 216;
+    if ([[UIScreen mainScreen] bounds].size.height == 812) {
+        keyboardHeight = 250;
+    }
+    theme.keyboardHeight = keyboardHeight;
+
     [[MMEmotionCentre defaultCentre] setTheme:theme];
 
     
