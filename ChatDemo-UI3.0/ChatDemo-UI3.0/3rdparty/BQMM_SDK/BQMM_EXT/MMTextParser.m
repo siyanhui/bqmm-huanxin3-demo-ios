@@ -55,7 +55,23 @@
         switch (type) {
             case EmojiTypeInvalid:
             {
-                [attrStr appendAttributedString:[[NSAttributedString alloc] initWithString:str]];
+                //遍历字符窜 找出 unicode emoji image
+                BOOL getImage = [[MMEmotionCentre defaultCentre].delegate respondsToSelector:@selector(imageForEmojiSymbol:)];
+                if(getImage) {
+                    NSRange range = NSMakeRange(0, [str length]);
+                    [str enumerateSubstringsInRange:range options:NSStringEnumerationByComposedCharacterSequences usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+                        UIImage *emojiImage = [[MMEmotionCentre defaultCentre].delegate imageForEmojiSymbol:substring];
+                        if(emojiImage != nil) {
+                            NSTextAttachment *placeholderAttachment = [[NSTextAttachment alloc] init];
+                            placeholderAttachment.bounds = CGRectMake(0, 0, 20, 20);//fixed size: 20X20
+                            [attrStr appendAttributedString:[NSAttributedString attributedStringWithAttachment:placeholderAttachment]];
+                        }else{
+                            [attrStr appendAttributedString:[[NSAttributedString alloc] initWithString:substring]];
+                        }
+                    }];
+                }else{
+                    [attrStr appendAttributedString:[[NSAttributedString alloc] initWithString:str]];
+                }
             }
                 break;
                 
@@ -88,7 +104,7 @@
                                              options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading
                                              context:nil].size;
     
-    return CGRectIntegral(CGRectMake(0, 0, sizeToFit.width + 10, sizeToFit.height + 16)).size;
+    return CGRectIntegral(CGRectMake(0, 0, sizeToFit.width + 10, sizeToFit.height)).size;
 }
 
 + (CGSize)sizeForTextWithText:(NSString *)text

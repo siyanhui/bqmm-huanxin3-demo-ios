@@ -116,7 +116,6 @@
 		CCF67583207B706200BBD973 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF67544207B706200BBD973 /* MASConstraint.m */; };
 		CCF67584207B706200BBD973 /* MASViewConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF67546207B706200BBD973 /* MASViewConstraint.m */; };
 		CCF67585207B706200BBD973 /* MASViewAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF67547207B706200BBD973 /* MASViewAttribute.m */; };
-		CCF67586207B706200BBD973 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CCF67548207B706200BBD973 /* Info.plist */; };
 		CCF67587207B706200BBD973 /* DXPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF6754B207B706200BBD973 /* DXPopover.m */; };
 		CCF67588207B706200BBD973 /* UIImage+WebP.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF6754D207B706200BBD973 /* UIImage+WebP.m */; };
 		CCF67589207B706200BBD973 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = CCF6754E207B706200BBD973 /* MKAnnotationView+WebCache.m */; };
@@ -2759,7 +2758,7 @@
 				TargetAttributes = {
 					90911023192EEA70008A48AA = {
 						DevelopmentTeam = HY2JF7VN6E;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 0;
@@ -2803,7 +2802,6 @@
 				D2B3DAD01BF1D7B700913BD5 /* icon_018.gif in Resources */,
 				D2B3DAE01BF1D7B700913BD5 /* icon_030.gif in Resources */,
 				EBD2ABB91A7CDAC000D16528 /* tabbarBackground.png in Resources */,
-				CCF67586207B706200BBD973 /* Info.plist in Resources */,
 				EBD2AB3B1A7CDAC000D16528 /* call_out_h.png in Resources */,
 				EBD2AB081A7CDAC000D16528 /* chatListCellHead@2x.png in Resources */,
 				D2A910841C83E7890025AD0A /* 58.png in Resources */,
@@ -3278,8 +3276,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HY2JF7VN6E;
 				EASEMOB_INC = "";
 				EASEMOB_LIB = "";
@@ -3324,8 +3322,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.siyanhui.hx3demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "db95d349-73c3-40c4-bbf3-dec6532f7af9";
-				PROVISIONING_PROFILE_SPECIFIER = "isan's XC WILD";
+				PROVISIONING_PROFILE = "b6dd5c23-46bc-4d0c-a2a0-14fdc0226c05";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
@@ -3342,8 +3340,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HY2JF7VN6E;
 				EASEMOB_INC = "";
 				EASEMOB_LIB = "";
@@ -3388,8 +3386,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.siyanhui.hx3demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "db95d349-73c3-40c4-bbf3-dec6532f7af9";
-				PROVISIONING_PROFILE_SPECIFIER = "isan's XC WILD";
+				PROVISIONING_PROFILE = "b6dd5c23-46bc-4d0c-a2a0-14fdc0226c05";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = NO;
 				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;

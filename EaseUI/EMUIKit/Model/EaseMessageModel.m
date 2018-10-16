@@ -33,6 +33,19 @@
             case EMMessageBodyTypeText:
             {
                 EMTextMessageBody *textBody = (EMTextMessageBody *)_firstMessageBody;
+                NSString *str = textBody.text;
+                NSRange range = NSMakeRange(0, [str length]);
+                [str enumerateSubstringsInRange:range options:NSStringEnumerationByComposedCharacterSequences usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+                    NSLog(@"%hu", [substring characterAtIndex:0]);
+                    
+                    
+                    
+                    
+                }];
+                
+                
+                
+                
                 NSString *didReceiveText = [EaseConvertToCommonEmoticonsHelper convertToSystemEmoticons:textBody.text];
                 self.text = didReceiveText;
             }

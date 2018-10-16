@@ -75,7 +75,24 @@
         switch (type) {
             case EmojiTypeInvalid:
             {
-                [mAStr appendAttributedString:[[NSAttributedString alloc] initWithString:str]];
+                //遍历字符窜 找出 unicode emoji image
+                BOOL getImage = [[MMEmotionCentre defaultCentre].delegate respondsToSelector:@selector(imageForEmojiSymbol:)];
+                if(getImage) {
+                    NSRange range = NSMakeRange(0, [str length]);
+                    [str enumerateSubstringsInRange:range options:NSStringEnumerationByComposedCharacterSequences usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+                        UIImage *emojiImage = [[MMEmotionCentre defaultCentre].delegate imageForEmojiSymbol:substring];
+                        if(emojiImage != nil) {
+                            NSTextAttachment *placeholderAttachment = [[NSTextAttachment alloc] init];
+                            placeholderAttachment.bounds = CGRectMake(0, 0, 20, 20);//fixed size: 20X20
+                            placeholderAttachment.image = [self placeHolderImage];
+                            [mAStr appendAttributedString:[NSAttributedString attributedStringWithAttachment:placeholderAttachment]];
+                        }else{
+                            [mAStr appendAttributedString:[[NSAttributedString alloc] initWithString:substring]];
+                        }
+                    }];
+                }else{
+                    [mAStr appendAttributedString:[[NSAttributedString alloc] initWithString:str]];
+                }
             }
                 break;
                 
@@ -141,7 +158,7 @@
                                              [weakSelf.attachmentRanges addObject:[NSValue valueWithRange:range]];
                                              [weakSelf.attachments addObject:value];
                                              UIImageView *imgView = [[UIImageView alloc] init];
-                                             imgView.image = attachment.emoji.emojiImage;
+                                             imgView.image = attachment.image;
                                              attachment.image = nil;
                                              [weakSelf.imageViews addObject:imgView];
                                          }
@@ -194,11 +211,30 @@
                 MMTextAttachment *attachment = [[MMTextAttachment alloc] init];
                 attachment.emoji = obj;
                 if ([attachment.image.images count] > 1) {
-                    attachment.image = [attachment placeHolderImage];
+                    attachment.image = attachment.emoji.emojiImage;
                 }
                 [mAStr appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
             } else {
-                [mAStr appendAttributedString:[[NSAttributedString alloc] initWithString:obj]];
+                //遍历字符窜 找出 unicode emoji image
+                BOOL getImage = [[MMEmotionCentre defaultCentre].delegate respondsToSelector:@selector(imageForEmojiSymbol:)];
+                if(getImage) {
+                    NSRange range = NSMakeRange(0, [obj length]);
+                    [obj enumerateSubstringsInRange:range options:NSStringEnumerationByComposedCharacterSequences usingBlock:^(NSString * _Nullable substring, NSRange substringRange, NSRange enclosingRange, BOOL * _Nonnull stop) {
+                        UIImage *emojiImage = [[MMEmotionCentre defaultCentre].delegate imageForEmojiSymbol:substring];
+                        if(emojiImage != nil) {
+                            MMTextAttachment *attachment = [[MMTextAttachment alloc] init];
+                            attachment.image = emojiImage;
+                            attachment.bounds = CGRectMake(0, 0, 20, 20);
+                            [mAStr appendAttributedString:[NSAttributedString attributedStringWithAttachment:attachment]];
+                        }else{
+                            [mAStr appendAttributedString:[[NSAttributedString alloc] initWithString:substring]];
+                        }
+                    }];
+                }else{
+                    [mAStr appendAttributedString:[[NSAttributedString alloc] initWithString:obj]];
+                }
+                
+                
             }
         }
         if (weakSelf.mmFont) {
@@ -290,10 +326,6 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self layoutAttachments];
-}
-
-- (void)copy:(id)sender {
-    [UIPasteboard generalPasteboard].string = [self mmTextWithRange:self.selectedRange];
 }
 
 #pragma mark - about url and phone number

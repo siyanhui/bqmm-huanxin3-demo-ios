@@ -363,7 +363,7 @@ static MMGifManager *_defaultManager = nil;
     if (_attchedView == nil) {
         return;
     }
-    //    [_collectionView setContentOffset:CGPointMake(0, 0) animated:false];
+//    [_collectionView setContentOffset:CGPointMake(0, 0) animated:false];
     //    [_timer invalidate];
     UIViewController *topController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     CGRect rect = [_attchedView convertRect:_attchedView.bounds toView:topController.view];
